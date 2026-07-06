@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E8291C">
+<title>Patty — Summer 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap');
+
+  :root {
+    --red: #E8291C;
+    --red-dark: #C0200F;
+    --red-deeper: #8B1208;
+    --white: #FFFFFF;
+    --off-white: #F7F3F0;
+    --ink: #1A0A08;
+    --ink-mid: #5C3030;
+    --ink-light: #A07070;
+    --border: rgba(232,41,28,0.15);
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 16px rgba(232,41,28,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--off-white);
+    color: var(--ink);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    padding: 52px 20px 14px;
+    background: var(--red);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 2px;
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    padding: 0 20px;
+    background: var(--red-dark);
+    gap: 0;
+  }
+
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    padding: 12px 16px 11px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+
+  .tab.active {
+    color: var(--white);
+    border-bottom-color: var(--white);
+  }
+
+  /* ── SCROLL CONTENT ── */
+  .content { padding: 0 0 100px; overflow-y: auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── EVENT CARD ── */
+  .event-card {
+    background: var(--white);
+    border-radius: 0;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.12s;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    border-left: 5px solid var(--red);
+  }
+
+  .event-card:active { transform: scale(0.99); }
+
+  /* Remove the top stripe pseudo-element */
+  .event-card::before { display: none; }
+
+  .event-card.flight   { border-left-color: var(--red); }
+  .event-card.hotel    { border-left-color: var(--ink); }
+  .event-card.airbnb   { border-left-color: var(--red-dark); }
+  .event-card.activity { border-left-color: var(--red-deeper); }
+  .event-card.transport{ border-left-color: #8B4513; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 3px;
+  }
+
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 240px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .card-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .meta-pill {
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-mid);
+    background: var(--off-white);
+    border-radius: 3px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    letter-spacing: 0.02em;
+  }
+
+  .meta-pill.highlight {
+    color: var(--white);
+    background: var(--red);
+    border-color: var(--red);
+    font-weight: 700;
+  }
+
+  .card-ref {
+    margin-top: 11px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ref-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .ref-value {
+    font-size: 12px;
+    color: var(--ink-mid);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── ALERT CARD ── */
+  .alert-card {
+    background: #FFF5F5;
+    border: 1.5px solid #FECACA;
+    border-left: 4px solid var(--red);
+    border-radius: 0;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .alert-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #7F1D1D;
+    font-weight: 500;
+  }
+
+  .alert-text strong { color: var(--red); font-weight: 700; }
+
+  /* ── PACKING TAB ── */
+  .packing-section { padding: 20px 20px 0; }
+  .packing-category { margin-bottom: 28px; }
+
+  .packing-cat-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .packing-cat-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--red);
+    opacity: 0.15;
+  }
+
+  .packing-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: background 0.12s;
+    background: var(--white);
+    margin-bottom: 4px;
+    border-left: 3px solid transparent;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .packing-item:hover { border-left-color: var(--red); background: #FFF5F5; }
+
+  .packing-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    border: 2px solid #D1D5DB;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+    font-size: 12px;
+    color: white;
+    font-weight: 800;
+  }
+
+  .packing-item.checked .packing-check {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .packing-item.checked .packing-text {
+    text-decoration: line-through;
+    color: var(--ink-light);
+  }
+
+  .packing-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: all 0.18s;
+  }
+
+  .packing-tag {
+    margin-left: auto;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    background: #FFF5F5;
+    padding: 3px 8px;
+    border: 1px solid #FECACA;
+    text-transform: uppercase;
+  }
+
+  /* ── INFO TAB ── */
+  .info-section { padding: 20px; }
+
+  .info-card {
+    background: var(--white);
+    border-radius: 0;
+    padding: 18px;
+    margin-bottom: 10px;
+    box-shadow: var(--card-shadow);
+    border-top: 3px solid var(--red);
+  }
+
+  .info-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--off-white);
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--ink-light); font-weight: 600; flex-shrink: 0; letter-spacing: 0.02em; }
+  .info-val { color: var(--ink); font-weight: 700; text-align: right; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: var(--ink);
+    border-top: 3px solid var(--red);
+    display: flex;
+    padding: 10px 0 26px;
+    z-index: 200;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: all 0.15s;
+  }
+
+  .nav-icon { font-size: 20px; }
+
+  .nav-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    transition: color 0.15s;
+  }
+
+  .nav-item.active .nav-label { color: var(--red); }
+
+  /* ── HERO BANNER ── */
+  .hero-banner {
+    margin: 0;
+    background: var(--red);
+    border-radius: 0;
+    padding: 28px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    right: -40px;
+    bottom: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--red-dark);
+    opacity: 0.5;
+  }
+
+  .hero-banner::after {
+    content: 'EUROPE';
+    position: absolute;
+    right: 12px;
+    top: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 80px;
+    font-weight: 800;
+    font-style: italic;
+    color: rgba(255,255,255,0.07);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px;
+  }
+
+  .hero-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 0.92;
+    margin-bottom: 20px;
+    color: #fff;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 16px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    padding: 0 8px;
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* ── DAY HEADER ── */
+  .day-header {
+    padding: 20px 20px 6px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+
+  .day-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--red);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    min-width: 60px;
+    opacity: 0.25;
+  }
+
+  .day-info { display: flex; flex-direction: column; }
+
+  .day-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+
+  .day-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .cards-in-day { padding: 0 20px 4px; }
+
+  /* ── COUNTRY DIVIDER ── */
+  .country-block { padding: 24px 20px 0; }
+  .country-label { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .country-flag { font-size: 22px; line-height: 1; }
+  .country-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    letter-spacing: 0.04em;
+  }
+  .country-line { flex: 1; height: 2px; background: var(--border); }
+
+  /* ── DATE CHIP ── */
+  .date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--ink-mid);
+    background: var(--white);
+    border-radius: 3px;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+
+  /* ── EXPENSE TAB ── */
+  .expense-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--color-off-white);
+  }
+  .expense-row:last-of-type { border-bottom: none; }
+  .expense-row__left { width: 100%; }
+  .expense-row__name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.3;
+  }
+  .expense-row__meta {
+    font-size: 11px;
+    color: var(--color-ink-light);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .expense-row__right { width: 100%; }
+  .expense-input {
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--color-ink);
+    background: var(--color-off-white);
+    border: 2px solid var(--color-border);
+    border-radius: 3px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 150ms, background 150ms;
+    -moz-appearance: textfield;
+  }
+  .expense-input::-webkit-outer-spin-button,
+  .expense-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .expense-input:focus { border-color: var(--color-red); background: #fff; }
+  .expense-input::placeholder { color: var(--color-ink-light); font-style: italic; }
+  .expense-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 4px;
+    margin-top: 4px;
+    border-top: 2px solid var(--color-off-white);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-mid);
+  }
+  .expense-subtotal span:last-child {
+    font-size: 18px;
+    color: var(--color-red);
+    letter-spacing: -0.01em;
+  }
+  /* Bar chart */
+  .chart-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--color-off-white);
+  }
+  .chart-row:last-child { border-bottom: none; }
+  .chart-row__label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-light);
+    min-width: 68px;
+  }
+  .chart-row__track {
+    flex: 1;
+    height: 8px;
+    background: var(--color-off-white);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .chart-row__bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 1px;
+    transition: width 400ms cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .chart-row__pct {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-ink-mid);
+    min-width: 34px;
+    text-align: right;
+  }
+
+  /* ── SAVE INDICATOR ── */
+  .save-indicator {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    z-index: 101;
+    transition: background 200ms, transform 200ms;
+  }
+  .save-indicator--active {
+    background: #fff;
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+  }
+
+  /* ── COUNTDOWN BADGE ── */
+  .countdown-badge {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3px;
+    padding: 6px 12px 5px;
+    min-width: 58px;
+  }
+  .countdown-badge__num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .countdown-badge__label {
+    font-family: var(--font-display);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .countdown-badge--live {
+    background: rgba(255,255,255,0.95);
+    border-color: #fff;
+  }
+  .countdown-badge--live .countdown-badge__num { color: var(--color-red); }
+  .countdown-badge--live .countdown-badge__label { color: var(--color-red-dark); }
+
+  /* ── EXPANDABLE NOTES ── */
+  .event-card { position: relative; padding-bottom: 38px; }
+
+  .card-expand-toggle {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-light);
+    font-size: 13px;
+    transition: transform 250ms ease;
+    cursor: pointer;
+    z-index: 2;
+    background: var(--white);
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+  }
+
+  .event-card.expanded .card-expand-toggle {
+    transform: rotate(180deg);
+    color: var(--red);
+  }
+
+  .card-notes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 280ms ease, margin-top 280ms ease;
+  }
+
+  .event-card.expanded .card-notes {
+    max-height: 200px;
+    margin-top: 12px;
+  }
+
+  .card-notes__inner {
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .card-notes__label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .card-notes__input {
+    width: 100%;
+    min-height: 52px;
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color 150ms;
+  }
+
+  .card-notes__input:focus { border-color: var(--red); background: #fff; }
+  .card-notes__input::placeholder { color: var(--ink-light); font-style: italic; }
+
+</style>
+</head>
+<body>
+
+<!-- BACK TO HOME -->
+<a href="index.html" style="display:flex;align-items:center;gap:6px;background:var(--ink);padding:10px 20px 9px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;">
+  <span style="font-size:14px;">←</span> All Trips
+</a>
+
+<!-- HEADER -->
+<div class="app-header">
+<div class="save-indicator" id="save-indicator" title="Synced"></div>
+  <div class="header-eyebrow">Summer 2026 · Europe</div>
+  <div class="header-title">Paris & Portugal</div>
+  <div class="header-subtitle">Jul 7 – Jul 15 · 8 nights · 3 countries</div>
+  <div class="countdown-badge" id="countdown-badge">
+    <span class="countdown-badge__num" id="countdown-num">—</span>
+    <span class="countdown-badge__label" id="countdown-label">days to go</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="switchTab('itinerary')">Itinerary</div>
+  <div class="tab" onclick="switchTab('packing')">Packing</div>
+  <div class="tab" onclick="switchTab('info')">Key Info</div>
+  <div class="tab" onclick="switchTab('expenses')">Expenses</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ═══════════ ITINERARY TAB ═══════════ -->
+  <div class="tab-panel active" id="tab-itinerary">
+
+    <div class="hero-banner">
+      <div class="hero-eyebrow">Your journey</div>
+      <div class="hero-headline">Paris.<br>Lagos.<br>Faro.<br>Porto.</div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">8</div>
+          <div class="hero-stat-label">Nights</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Cities</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2</div>
+          <div class="hero-stat-label">Countries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Bookings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div style="padding: 16px 24px 0;">
+      <div class="alert-card">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text">
+          <strong>Early morning heads-up:</strong> Your Paris–Faro flight departs Orly at 6:10am on Jul 9. Be at ORY by 4:30am. Arrange transport from Maison Barbès the night before.
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day-header">
+      <div class="day-num">07</div>
+      <div class="day-info">
+        <div class="day-name">Tuesday, July 7</div>
+        <div class="day-sub">Departure night · New York</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Leg 1 of 2</div>
+            <div class="card-title">JFK → Paris CDG</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">10:29pm departure</span>
+          <span class="meta-pill">7h 46m</span>
+          <span class="meta-pill">Delta DL0264</span>
+          <span class="meta-pill">Terminal 4</span>
+          <span class="meta-pill">Boeing 767-400</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">Wed Jul 8 · 12:15pm · Aerogare 2 Term E</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-header">
+      <div class="day-num">08</div>
+      <div class="day-info">
+        <div class="day-name">Wednesday, July 8</div>
+        <div class="day-sub">Paris · 1 night</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Paris 18e</div>
+            <div class="card-title">Maison Barbès</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in after 3:00pm</span>
+          <span class="meta-pill">Superior Room · Balcony</span>
+          <span class="meta-pill">Check-out Jul 9 by 12:00pm</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Address</span>
+          <span class="ref-value">4 Rue Bervic, 75018</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day-header">
+      <div class="day-num">09</div>
+      <div class="day-info">
+        <div class="day-name">Thursday, July 9</div>
+        <div class="day-sub">Paris → Lagos · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="alert-card">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-text">
+          <strong>4:30am:</strong> Leave Maison Barbès for Orly. Pre-book a taxi or Uber the night before — public transit may not run this early.
+        </div>
+      </div>
+
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Transavia France</div>
+            <div class="card-title">Paris ORY → Faro</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">6:10am departure</span>
+          <span class="meta-pill">Arrives 7:50am</span>
+          <span class="meta-pill">2h 40m direct</span>
+          <span class="meta-pill">Economy</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Ref</span>
+          <span class="ref-value">K9GS4F</span>
+        </div>
+      </div>
+
+      <div class="event-card transport">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Transport · Faro Airport → Lagos</div>
+            <div class="card-title">Public Transit Options</div>
+          </div>
+          <div class="card-icon">🚌</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">~1h 15m journey</span>
+          <span class="meta-pill">Eva Bus: FAO → Lagos ~€7</span>
+          <span class="meta-pill">Taxi: ~€55–70 fixed</span>
+          <span class="meta-pill">Uber available at FAO</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Bus tip</span>
+          <span class="ref-value">Eva/Rede Expressos — buy at FAO arrivals</span>
+        </div>
+      </div>
+
+      <div class="event-card airbnb">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Villa · Lagos · 2 nights</div>
+            <div class="card-title">La Perla Blanca</div>
+          </div>
+          <div class="card-icon">🏠</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in from 15:00 · Jul 9</span>
+          <span class="meta-pill">Check-out Jul 11 by 10:00</span>
+          <span class="meta-pill">One-Bedroom Villa · Entire villa</span>
+          <span class="meta-pill">Lockbox entry</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Address</span>
+          <span class="ref-value">Rua Doutor António Guerreiro Tello 22A, 8600-735 Lagos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day-header">
+      <div class="day-num">10</div>
+      <div class="day-info">
+        <div class="day-name">Friday, July 10</div>
+        <div class="day-sub">Lagos · Coast day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Activity · Half Day</div>
+            <div class="card-title">Ponta da Piedade Cruise</div>
+          </div>
+          <div class="card-icon">⛵</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">9:45am</span>
+          <span class="meta-pill">Lunch & Drinks included</span>
+          <span class="meta-pill">1 Adult</span>
+          <span class="meta-pill">USD $60.14</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Booking ref</span>
+          <span class="ref-value">1409803273</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAYS 11 -->
+    <div class="day-header">
+      <div class="day-num">11</div>
+      <div class="day-info">
+        <div class="day-name">Saturday, July 11</div>
+        <div class="day-sub">Lagos → Faro · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="alert-card" style="background: #f0fdf4; border-color: #bbf7d0;">
+        <div class="alert-icon">⏰</div>
+        <div class="alert-text" style="color: #166534;">
+          Check out of La Perla Blanca by <strong style="color: #059669;">10:00am</strong>. Morning free — Praia Dona Ana or old town — then head to Faro. Check in at Olivia from 3:00pm.
+        </div>
+      </div>
+
+      <div class="event-card transport">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Transport · Lagos → Faro</div>
+            <div class="card-title">Lagos to Faro</div>
+          </div>
+          <div class="card-icon">🚌</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">~1h journey</span>
+          <span class="meta-pill">Eva Bus: Lagos → FAO ~€6</span>
+          <span class="meta-pill">Taxi: ~€50–65</span>
+          <span class="meta-pill">Uber available</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Bus tip</span>
+          <span class="ref-value">Buy ticket at Lagos bus station or onboard</span>
+        </div>
+      </div>
+
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Faro · 1 night</div>
+            <div class="card-title">Olivia Boutique Suites</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in from 15:00 · Jul 11</span>
+          <span class="meta-pill">Check-out Jul 12 by 11:00</span>
+          <span class="meta-pill">Family Room · Non-smoking</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Address</span>
+          <span class="ref-value">Rua Teofilo Braga 28, 8000-438 Faro</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DAY 12 -->
+    <div class="day-header">
+      <div class="day-num">12</div>
+      <div class="day-info">
+        <div class="day-name">Sunday, July 12</div>
+        <div class="day-sub">Lagos → Porto · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Ryanair FR 5451</div>
+            <div class="card-title">Faro FAO → Porto OPO</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Departs 8:30am</span>
+          <span class="meta-pill">Gate closes 8:00am</span>
+          <span class="meta-pill">Seat 02F</span>
+          <span class="meta-pill">1 checked bag · 20kg</span>
+          <span class="meta-pill">Front Door boarding</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Booking ref</span>
+          <span class="ref-value">K8EKMH · Sequence 4</span>
+        </div>
+      </div>
+
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Apartment · Porto · 3 nights</div>
+            <div class="card-title">Impar Studios</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in 16:00–20:00 · Jul 12</span>
+          <span class="meta-pill">Check-out Jul 15 by 12:00</span>
+          <span class="meta-pill">Entire apartment</span>
+          <span class="meta-pill">Keys at on-site reception</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Address</span>
+          <span class="ref-value">Praça de Almeida Garrett 13, 4000-069 Porto</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 13 -->
+    <div class="day-header">
+      <div class="day-num">13</div>
+      <div class="day-info">
+        <div class="day-name">Monday, July 13</div>
+        <div class="day-sub">Porto · Alcino + Serralves</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="alert-card" style="background: #fff7ed; border-color: #fed7aa; border-left: 4px solid #ea580c;">
+        <div class="alert-icon">📍</div>
+        <div class="alert-text" style="color: #7c2d12;">
+          <strong>Bolhão is closed Sundays</strong> — schedule the Day in the Life shoot for Mon or Sat (8am open). Espaço Mira is Wed–Sat only, so today is your Alcino + Serralves window.
+        </div>
+      </div>
+
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Studio Visit · Craft · The Cultural Brief</div>
+            <div class="card-title">Alcino Silversmith</div>
+          </div>
+          <div class="card-icon">🔨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Weekdays only</span>
+          <span class="meta-pill">10am–1pm · 2–7pm</span>
+          <span class="meta-pill">Lunch break 1–2pm</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Pitch to</span>
+          <span class="ref-value">Patricia — 6th-generation host · named in reviews</span>
+        </div>
+      </div>
+
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Cultural · Museum + Villa + Gardens</div>
+            <div class="card-title">Serralves</div>
+          </div>
+          <div class="card-icon">🏛️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Opens 10am</span>
+          <span class="meta-pill">Until 7pm weekdays</span>
+          <span class="meta-pill">Allow full afternoon</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Three environments</span>
+          <span class="ref-value">Museum · Art Deco Villa · Gardens</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DAY 14 -->
+    <div class="day-header">
+      <div class="day-num">14</div>
+      <div class="day-info">
+        <div class="day-name">Tuesday, July 14</div>
+        <div class="day-sub">Porto · Douro Valley + Casa da Música</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Activity · Full Day · EFun Tours</div>
+            <div class="card-title">Douro Valley Wine Tour</div>
+          </div>
+          <div class="card-icon">🍇</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">8:30am start</span>
+          <span class="meta-pill">3 Vineyards</span>
+          <span class="meta-pill">Lunch included</span>
+          <span class="meta-pill">Small group (max 8)</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Booking ref</span>
+          <span class="ref-value">BR-1409808997</span>
+        </div>
+      </div>
+
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Architecture · Evening · Book in advance</div>
+            <div class="card-title">Casa da Música</div>
+          </div>
+          <div class="card-icon">🎵</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Opens 9:30am daily</span>
+          <span class="meta-pill">Guided tour — book ahead</span>
+          <span class="meta-pill">Tours fill up fast</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Plan</span>
+          <span class="ref-value">Evening visit after wine tour returns</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DAY 15 -->
+    <div class="day-header">
+      <div class="day-num">15</div>
+      <div class="day-info">
+        <div class="day-name">Wednesday, July 15</div>
+        <div class="day-sub">Porto · Espaço Mira + Fly home 🏠</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+
+      <div class="alert-card" style="background: #F5FFF8; border-color: #BBF7D0; border-left: 4px solid #059669;">
+        <div class="alert-icon">⏰</div>
+        <div class="alert-text" style="color: #064E3B;">
+          Check out by <strong style="color: #059669;">12:00pm</strong>. Espaço Mira opens at 3pm — drop in before your flight. Leave for OPO by 3:30pm at the latest.
+        </div>
+      </div>
+
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Gallery · Sofia Beça Exhibition</div>
+            <div class="card-title">Espaço Mira</div>
+          </div>
+          <div class="card-icon">🎨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Wed–Sat only</span>
+          <span class="meta-pill">Opens 3pm</span>
+          <span class="meta-pill">30 min max visit</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Timing</span>
+          <span class="ref-value">3:00–3:30pm · then straight to OPO</span>
+        </div>
+      </div>
+
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · TAP Portugal · Nonstop</div>
+            <div class="card-title">Porto OPO → Newark EWR</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Departs 6:00pm</span>
+          <span class="meta-pill">Arrives 9:00pm NYC</span>
+          <span class="meta-pill">Nonstop</span>
+          <span class="meta-pill">TAP Portugal</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">Newark EWR · 9:00pm ET · Ref: YRYMXO</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /itinerary -->
+
+
+  <!-- ═══════════ PACKING TAB ═══════════ -->
+  <div class="tab-panel" id="tab-packing">
+    <div class="packing-section">
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Documents</div>
+        <div id="packing-docs">
+          <div class="packing-item" data-key="pack-1" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Passport (valid through 2027+)</div>
+          </div>
+          <div class="packing-item" data-key="pack-2" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">All booking confirmations (screenshot)</div>
+          </div>
+          <div class="packing-item" data-key="pack-3" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Travel insurance card / policy</div>
+          </div>
+          <div class="packing-item" data-key="pack-4" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Maison Barbès address (printed)</div>
+            <div class="packing-tag">Paris</div>
+          </div>
+          <div class="packing-item" data-key="pack-5" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">La Perla Blanca address (Lagos)</div>
+            <div class="packing-tag">Lagos</div>
+          </div>
+          <div class="packing-item" data-key="pack-6" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Credit card with no foreign fees</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Clothing · Algarve</div>
+        <div>
+          <div class="packing-item" data-key="pack-7" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Swimwear (2)</div>
+          </div>
+          <div class="packing-item" data-key="pack-8" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Linen coverup / beach dress</div>
+          </div>
+          <div class="packing-item" data-key="pack-9" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Sandals · walking shoes</div>
+          </div>
+          <div class="packing-item" data-key="pack-10" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Casual evening outfit</div>
+          </div>
+          <div class="packing-item" data-key="pack-11" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Hat / sun protection</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Clothing · Paris & Porto</div>
+        <div>
+          <div class="packing-item" data-key="pack-12" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">1 elevated dinner outfit</div>
+          </div>
+          <div class="packing-item" data-key="pack-13" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Light layer / jacket (evenings)</div>
+          </div>
+          <div class="packing-item" data-key="pack-14" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Comfortable walking shoes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Tech & Essentials</div>
+        <div>
+          <div class="packing-item" data-key="pack-15" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Universal adapter (EU plug)</div>
+          </div>
+          <div class="packing-item" data-key="pack-16" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Portable charger / power bank</div>
+          </div>
+          <div class="packing-item" data-key="pack-17" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">International SIM or roaming plan</div>
+          </div>
+          <div class="packing-item" data-key="pack-18" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Camera / extra memory cards</div>
+          </div>
+          <div class="packing-item" data-key="pack-19" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Earbuds / headphones</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Toiletries</div>
+        <div>
+          <div class="packing-item" data-key="pack-20" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">SPF 50+ sunscreen</div>
+          </div>
+          <div class="packing-item" data-key="pack-21" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">After-sun / aloe</div>
+          </div>
+          <div class="packing-item" data-key="pack-22" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Travel skincare routine</div>
+          </div>
+          <div class="packing-item" data-key="pack-23" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Medications / prescriptions</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /packing -->
+
+
+  <!-- ═══════════ INFO TAB ═══════════ -->
+  <div class="tab-panel" id="tab-info">
+    <div class="info-section">
+
+      <div class="info-card">
+        <div class="info-card-title">✈️ Flights</div>
+        <div class="info-row">
+          <span class="info-key">Outbound</span>
+          <span class="info-val">DL0264 · Jul 7 · 10:29pm JFK</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Arrives Paris</span>
+          <span class="info-val">Jul 8 · 12:15pm CDG T2E</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Paris → Faro</span>
+          <span class="info-val">K9GS4F · Jul 9 · 6:10am ORY</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Faro → Porto</span>
+          <span class="info-val">FR5451 · Jul 12 · 8:30am FAO</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Faro → Porto ref</span>
+          <span class="info-val">K8EKMH · Seat 02F</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Return</span>
+          <span class="info-val">TAP · Jul 15 · 6:00pm OPO → EWR 9pm</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">🚌 Faro → Lagos Transport</div>
+        <div class="info-row">
+          <span class="info-key">Bus (cheapest)</span>
+          <span class="info-val">Eva/Rede Expressos · ~€7 · ~1h 15m</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Bus tickets</span>
+          <span class="info-val">Buy at FAO arrivals hall</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Taxi (fixed)</span>
+          <span class="info-val">~€55–70 · booked at FAO taxi desk</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Uber</span>
+          <span class="info-val">Available at Faro Airport</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">🏨 Accommodation</div>
+        <div class="info-row">
+          <span class="info-key">Paris</span>
+          <span class="info-val">Maison Barbès · Jul 8–9</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Paris address</span>
+          <span class="info-val">4 Rue Bervic, 75018</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Lagos</span>
+          <span class="info-val">La Perla Blanca · Jul 9–11</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Lagos address</span>
+          <span class="info-val">Rua Doutor António Guerreiro Tello 22A, 8600-735</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Faro</span>
+          <span class="info-val">Olivia Boutique Suites · Jul 11–12</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Faro address</span>
+          <span class="info-val">Rua Teofilo Braga 28, 8000-438 Faro</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Porto</span>
+          <span class="info-val">Impar Studios · Jul 12–15</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Porto address</span>
+          <span class="info-val">Praça de Almeida Garrett 13, 4000-069 Porto</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">📋 Booking References</div>
+        <div class="info-row">
+          <span class="info-key">Delta flight</span>
+          <span class="info-val">DL0264</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Transavia (ORY→FAO)</span>
+          <span class="info-val">K9GS4F</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Ryanair (FAO→OPO)</span>
+          <span class="info-val">K8EKMH · Seat 02F</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">La Perla Blanca</span>
+          <span class="info-val">Booking.com · Jul 9–11 · lockbox entry</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Olivia Boutique Suites</span>
+          <span class="info-val">Booking.com · Jul 11–12 · Faro</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Impar Studios</span>
+          <span class="info-val">Booking.com · Jul 12–15 · reception key</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Ponta Piedade cruise</span>
+          <span class="info-val">1409803273</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">TAP Portugal return</span>
+          <span class="info-val">YRYMXO</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Douro wine tour</span>
+          <span class="info-val">BR-1409808997</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Cruise auto-payment</span>
+          <span class="info-val">Jul 8 · USD $60.14</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">⚡ Still To Do</div>
+        <div class="info-row">
+          <span class="info-key">ORY early taxi (Jul 9)</span>
+          <span class="info-val" style="color: #E8291C;">Book from Maison Barbès</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Lagos → FAO (Jul 11–12)</span>
+          <span class="info-val" style="color: #B45309;">Book bus/taxi in advance</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Paris dinner (Jul 8)</span>
+          <span class="info-val" style="color: #A07070;">Optional</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /info -->
+  <!-- ═══════════ EXPENSES TAB ═══════════ -->
+  <div class="tab-panel" id="tab-expenses">
+    <div class="info-section">
+
+      <!-- SUMMARY CARD -->
+      <div style="background: linear-gradient(135deg, #B91C0E 0%, #8B1208 100%); padding: 20px; margin-bottom: 12px; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(139,18,8,0.35);">
+        <div style="position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(0,0,0,0.18);"></div>
+        <div style="font-family: var(--font-display); font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #FFD6D1; margin-bottom: 4px; position: relative;">Total Trip Budget</div>
+        <div id="grand-total" style="font-family: var(--font-display); font-size: 48px; font-weight: 800; font-style: italic; color: #fff; line-height: 1; letter-spacing: -0.02em; position: relative; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">$0</div>
+        <div style="font-size: 12px; color: #FFE3E0; margin-top: 6px; font-weight: 600; position: relative;">All confirmed bookings · USD</div>
+        <div style="display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.25); margin-top: 16px; padding-top: 14px; position: relative;">
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-flights" style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: var(--font-display); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Flights</div>
+          </div>
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-stays" style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: var(--font-display); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Stays</div>
+          </div>
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-transport" style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: var(--font-display); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Transport</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div id="stat-activities" style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: var(--font-display); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Activities</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLIGHTS -->
+      <div class="info-card" id="cat-flights">
+        <div class="info-card-title">✈️ Flights</div>
+
+        <div class="expense-row" data-amount="0" data-category="flights">
+          <div class="expense-row__left">
+            <div class="expense-row__name">JFK → Paris CDG · Delta DL0264</div>
+            <div class="expense-row__meta">Jul 7 · Nonstop · 7h 46m</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-1" type="number" value="237" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="flights">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Paris ORY → Faro · Transavia</div>
+            <div class="expense-row__meta">Jul 9 · Ref K9GS4F · Direct · Confirmed</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-2" type="number" value="206.66" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="flights">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Faro → Porto · Ryanair FR5451</div>
+            <div class="expense-row__meta">Jul 12 · Ref K8EKMH · Seat 02F</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-3" type="number" value="100" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="flights">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Porto OPO → Newark EWR · TAP</div>
+            <div class="expense-row__meta">Jul 15 · Ref YRYMXO · Nonstop</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-4" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-subtotal">
+          <span>Flights total</span>
+          <span id="total-flights">$0</span>
+        </div>
+      </div>
+
+      <!-- ACCOMMODATION -->
+      <div class="info-card" id="cat-stays">
+        <div class="info-card-title">🏨 Accommodation</div>
+
+        <div class="expense-row" data-amount="0" data-category="stays">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Maison Barbès · Paris</div>
+            <div class="expense-row__meta">Jul 8–9 · 1 night · $236 + 20% gov fee</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-5" type="number" value="283.20" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="stays">
+          <div class="expense-row__left">
+            <div class="expense-row__name">La Perla Blanca · Lagos</div>
+            <div class="expense-row__meta">Jul 9–11 · 2 nights · Booking.com</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-6" type="number" value="407" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="stays">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Olivia Boutique Suites · Faro</div>
+            <div class="expense-row__meta">Jul 11–12 · 1 night · Family Room</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-7" type="number" value="136" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="stays">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Impar Studios · Porto</div>
+            <div class="expense-row__meta">Jul 12–15 · 3 nights · Entire apartment</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-7b" type="number" value="346" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-subtotal">
+          <span>Accommodation total</span>
+          <span id="total-stays">$0</span>
+        </div>
+      </div>
+
+      <!-- TRANSPORT -->
+      <div class="info-card" id="cat-transport">
+        <div class="info-card-title">🚗 Transport</div>
+
+        <div class="expense-row" data-amount="0" data-category="transport">
+          <div class="expense-row__left">
+            <div class="expense-row__name">FAO → Lagos (bus/taxi/Uber)</div>
+            <div class="expense-row__meta">Jul 9 · Eva Bus ~€7 or taxi ~€55–70</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-8" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="transport">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Taxi · Maison Barbès → Orly</div>
+            <div class="expense-row__meta">Jul 9 · ~4:30am · Book in advance</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-9" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="transport">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Airport transfers · other</div>
+            <div class="expense-row__meta">CDG arrival, OPO, EWR</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-10" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-subtotal">
+          <span>Transport total</span>
+          <span id="total-transport">$0</span>
+        </div>
+      </div>
+
+      <!-- ACTIVITIES -->
+      <div class="info-card" id="cat-activities">
+        <div class="info-card-title">🎯 Activities</div>
+
+        <div class="expense-row" data-amount="60.14" data-category="activities">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Ponta da Piedade Cruise</div>
+            <div class="expense-row__meta">Jul 10 · Lagos · Auto-pay Jul 8</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-11" type="number" value="60.14" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="activities">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Douro Valley Wine Tour · EFun</div>
+            <div class="expense-row__meta">Jul 14 · Porto · 3 vineyards + lunch</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-12" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="activities">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Casa da Música · Guided Tour</div>
+            <div class="expense-row__meta">Jul 14 · Porto · Book in advance</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-13" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="activities">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Serralves · Admission</div>
+            <div class="expense-row__meta">Jul 13 · Museum + Villa + Gardens</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-14" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-subtotal">
+          <span>Activities total</span>
+          <span id="total-activities">$60.14</span>
+        </div>
+      </div>
+
+      <!-- MISC / ADD ROW -->
+      <div class="info-card">
+        <div class="info-card-title">➕ Miscellaneous</div>
+
+        <div class="expense-row" data-amount="0" data-category="misc">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Food & dining</div>
+            <div class="expense-row__meta">Restaurants, cafes, markets</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-15" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="misc">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Shopping</div>
+            <div class="expense-row__meta">Alcino silverwork, local finds</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-16" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-row" data-amount="0" data-category="misc">
+          <div class="expense-row__left">
+            <div class="expense-row__name">Other</div>
+            <div class="expense-row__meta">Incidentals, tips, extras</div>
+          </div>
+          <div class="expense-row__right">
+            <input class="expense-input" data-key="exp-17" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+          </div>
+        </div>
+
+        <div class="expense-subtotal">
+          <span>Misc total</span>
+          <span id="total-misc">$0</span>
+        </div>
+      </div>
+
+      <!-- BAR CHART -->
+      <div class="info-card">
+        <div class="info-card-title">📊 Breakdown</div>
+        <div id="chart-container" style="padding: 4px 0 8px;">
+          <div class="chart-row" id="chart-flights">
+            <div class="chart-row__label">Flights</div>
+            <div class="chart-row__track"><div class="chart-row__bar" style="background: var(--color-red);"></div></div>
+            <div class="chart-row__pct">0%</div>
+          </div>
+          <div class="chart-row" id="chart-stays">
+            <div class="chart-row__label">Stays</div>
+            <div class="chart-row__track"><div class="chart-row__bar" style="background: var(--color-ink);"></div></div>
+            <div class="chart-row__pct">0%</div>
+          </div>
+          <div class="chart-row" id="chart-transport">
+            <div class="chart-row__label">Transport</div>
+            <div class="chart-row__track"><div class="chart-row__bar" style="background: var(--color-red-dark);"></div></div>
+            <div class="chart-row__pct">0%</div>
+          </div>
+          <div class="chart-row" id="chart-activities">
+            <div class="chart-row__label">Activities</div>
+            <div class="chart-row__track"><div class="chart-row__bar" style="background: var(--color-red-deeper);"></div></div>
+            <div class="chart-row__pct">0%</div>
+          </div>
+          <div class="chart-row" id="chart-misc">
+            <div class="chart-row__label">Misc</div>
+            <div class="chart-row__track"><div class="chart-row__bar" style="background: #8B4513;"></div></div>
+            <div class="chart-row__pct">0%</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /expenses -->
+
+</div><!-- /content -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchTabNav(this, 'itinerary')">
+    <div class="nav-icon">🗓</div>
+    <div class="nav-label">Itinerary</div>
+  </div>
+  <div class="nav-item" onclick="switchTabNav(this, 'packing')">
+    <div class="nav-icon">🧳</div>
+    <div class="nav-label">Packing</div>
+  </div>
+  <div class="nav-item" onclick="switchTabNav(this, 'info')">
+    <div class="nav-icon">📋</div>
+    <div class="nav-label">Key Info</div>
+  </div>
+  <div class="nav-item" onclick="switchTabNav(this, 'expenses')">
+    <div class="nav-icon">💰</div>
+    <div class="nav-label">Expenses</div>
+  </div>
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    const tabs = document.querySelectorAll('.tab');
+    const names = ['itinerary', 'packing', 'info', 'expenses'];
+    tabs[names.indexOf(name)].classList.add('active');
+    document.querySelector('.content').scrollTop = 0;
+  }
+
+  function switchTabNav(el, name) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    switchTab(name);
+  }
+
+  /* ───────────────────────────────
+     PERSISTENT STORAGE
+     Saves packing checkboxes + expense amounts so they
+     survive closing the app and reopening the link.
+  ─────────────────────────────── */
+
+  let saveTimer = null;
+  function flagSaving() {
+    const dot = document.getElementById('save-indicator');
+    if (!dot) return;
+    dot.classList.add('save-indicator--active');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => dot.classList.remove('save-indicator--active'), 900);
+  }
+
+  async function togglePack(el) {
+    el.classList.toggle('checked');
+    const checked = el.classList.contains('checked');
+    el.querySelector('.packing-check').innerHTML = checked ? '✓' : '';
+
+    const key = el.getAttribute('data-key');
+    try {
+      await window.storage.set('packing:' + key, checked ? '1' : '0');
+      flagSaving();
+    } catch (e) { console.error('Save failed', e); }
+  }
+
+  async function loadPacking() {
+    document.querySelectorAll('.packing-item[data-key]').forEach(async el => {
+      const key = el.getAttribute('data-key');
+      try {
+        const result = await window.storage.get('packing:' + key);
+        if (result && result.value === '1') {
+          el.classList.add('checked');
+          el.querySelector('.packing-check').innerHTML = '✓';
+        }
+      } catch (e) { /* key not found yet — leave unchecked */ }
+    });
+  }
+
+  function fmt(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  let recalcSaveTimer = null;
+  function recalc() {
+    const cats = ['flights', 'stays', 'transport', 'activities', 'misc'];
+    const totals = {};
+    let grand = 0;
+
+    cats.forEach(cat => {
+      let sum = 0;
+      document.querySelectorAll(`.expense-row[data-category="${cat}"] .expense-input`).forEach(input => {
+        sum += parseFloat(input.value) || 0;
+      });
+      totals[cat] = sum;
+      grand += sum;
+      document.getElementById('total-' + cat).textContent = fmt(sum);
+    });
+
+    document.getElementById('grand-total').textContent = fmt(grand);
+    document.getElementById('stat-flights').textContent = fmt(totals.flights);
+    document.getElementById('stat-stays').textContent = fmt(totals.stays);
+    document.getElementById('stat-transport').textContent = fmt(totals.transport);
+    document.getElementById('stat-activities').textContent = fmt(totals.activities);
+
+    cats.forEach(cat => {
+      const pct = grand > 0 ? Math.round((totals[cat] / grand) * 100) : 0;
+      const row = document.getElementById('chart-' + cat);
+      if (row) {
+        row.querySelector('.chart-row__bar').style.width = pct + '%';
+        row.querySelector('.chart-row__pct').textContent = pct + '%';
+      }
+    });
+
+    // Debounced save — waits for typing to pause
+    clearTimeout(recalcSaveTimer);
+    recalcSaveTimer = setTimeout(saveExpenses, 400);
+  }
+
+  async function saveExpenses() {
+    const inputs = document.querySelectorAll('.expense-input[data-key]');
+    try {
+      for (const input of inputs) {
+        const key = input.getAttribute('data-key');
+        await window.storage.set('expense:' + key, input.value || '');
+      }
+      flagSaving();
+    } catch (e) { console.error('Save failed', e); }
+  }
+
+  async function loadExpenses() {
+    const inputs = document.querySelectorAll('.expense-input[data-key]');
+    for (const input of inputs) {
+      const key = input.getAttribute('data-key');
+      try {
+        const result = await window.storage.get('expense:' + key);
+        if (result && result.value !== '') {
+          input.value = result.value;
+        }
+      } catch (e) { /* key not found yet — keep default value */ }
+    }
+    recalc();
+  }
+
+  /* ───────────────────────────────
+     COUNTDOWN
+     Trip dates: depart Jul 7 (10:29pm ET), return lands Jul 15 (9pm ET)
+  ─────────────────────────────── */
+  function updateCountdown() {
+    const badge = document.getElementById('countdown-badge');
+    const numEl = document.getElementById('countdown-num');
+    const labelEl = document.getElementById('countdown-label');
+    if (!badge) return;
+
+    const now = new Date();
+    const departure = new Date('2026-07-07T22:29:00-04:00');
+    const returnLanding = new Date('2026-07-15T21:00:00-04:00');
+
+    const msPerDay = 1000 * 60 * 60 * 24;
+
+    if (now < departure) {
+      const days = Math.ceil((departure - now) / msPerDay);
+      numEl.textContent = days;
+      labelEl.textContent = days === 1 ? 'day to go' : 'days to go';
+      badge.classList.remove('countdown-badge--live');
+    } else if (now >= departure && now <= returnLanding) {
+      const dayOfTrip = Math.floor((now - departure) / msPerDay) + 1;
+      numEl.textContent = dayOfTrip;
+      labelEl.textContent = 'in Europe';
+      badge.classList.add('countdown-badge--live');
+    } else {
+      numEl.textContent = '✓';
+      labelEl.textContent = 'trip complete';
+      badge.classList.remove('countdown-badge--live');
+    }
+  }
+
+  /* ───────────────────────────────
+     EXPANDABLE CARD NOTES
+     Every event-card gets a tap-to-expand chevron + a free-text
+     notes field. Notes persist via window.storage.
+  ─────────────────────────────── */
+  function initCardNotes() {
+    const cards = document.querySelectorAll('.event-card');
+    cards.forEach((card, i) => {
+      if (card.querySelector('.card-expand-toggle')) return; // already initialized
+
+      const key = 'note-' + i;
+      card.setAttribute('data-note-key', key);
+
+      const toggle = document.createElement('div');
+      toggle.className = 'card-expand-toggle';
+      toggle.innerHTML = '▾';
+      toggle.onclick = (e) => {
+        e.stopPropagation();
+        card.classList.toggle('expanded');
+      };
+      card.appendChild(toggle);
+
+      const notes = document.createElement('div');
+      notes.className = 'card-notes';
+      notes.innerHTML = `
+        <div class="card-notes__inner">
+          <div class="card-notes__label">Your notes</div>
+          <textarea class="card-notes__input" placeholder="Add a note — confirmation details, a tip, a reminder..." onclick="event.stopPropagation()"></textarea>
+        </div>
+      `;
+      card.appendChild(notes);
+
+      const textarea = notes.querySelector('.card-notes__input');
+      let noteSaveTimer = null;
+      textarea.addEventListener('input', () => {
+        clearTimeout(noteSaveTimer);
+        noteSaveTimer = setTimeout(async () => {
+          try {
+            await window.storage.set('note:' + key, textarea.value);
+            flagSaving();
+          } catch (e) { console.error('Note save failed', e); }
+        }, 500);
+      });
+    });
+  }
+
+  async function loadCardNotes() {
+    const cards = document.querySelectorAll('.event-card[data-note-key]');
+    for (const card of cards) {
+      const key = card.getAttribute('data-note-key');
+      const textarea = card.querySelector('.card-notes__input');
+      try {
+        const result = await window.storage.get('note:' + key);
+        if (result && result.value) {
+          textarea.value = result.value;
+        }
+      } catch (e) { /* no note saved yet */ }
+    }
+  }
+
+  // ── Init: load saved state, then render ──
+  window.addEventListener('load', async () => {
+    updateCountdown();
+    initCardNotes();
+    try {
+      await loadPacking();
+      await loadExpenses();
+      await loadCardNotes();
+    } catch (e) {
+      console.error('Storage unavailable, using defaults', e);
+      recalc();
+    }
+    setTimeout(() => {
+      document.querySelector('.progress-fill') && (document.querySelector('.progress-fill').style.width = '0%');
+    }, 300);
+  });
+</script>
+
+</body>
+</html>
