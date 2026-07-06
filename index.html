@@ -219,17 +219,17 @@
     <line x1="30" y1="214" x2="400" y2="214" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
 
     <!-- Stats -->
-    <text x="82"  y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">1</text>
-    <text x="82"  y="256" font-size="8"  font-weight="700" fill="rgba(255,255,255,0.48)" text-anchor="middle" letter-spacing="0.14em">TRIP</text>
+    <text x="82"  y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">2</text>
+    <text x="82"  y="256" font-size="8"  font-weight="700" fill="rgba(255,255,255,0.48)" text-anchor="middle" letter-spacing="0.14em">TRIPS</text>
 
     <line x1="148" y1="220" x2="148" y2="262" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
 
-    <text x="215" y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">2</text>
+    <text x="215" y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">6</text>
     <text x="215" y="256" font-size="8"  font-weight="700" fill="rgba(255,255,255,0.48)" text-anchor="middle" letter-spacing="0.14em">COUNTRIES</text>
 
     <line x1="282" y1="220" x2="282" y2="262" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
 
-    <text x="349" y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">4</text>
+    <text x="349" y="240" font-size="30" font-weight="800" fill="white" text-anchor="middle">8</text>
     <text x="349" y="256" font-size="8"  font-weight="700" fill="rgba(255,255,255,0.48)" text-anchor="middle" letter-spacing="0.14em">CITIES</text>
   </svg>
 </div>
@@ -288,6 +288,64 @@
     </div>
   </div>
 
+  <div class="trip-arrow">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M2 6h8M6 2l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</a>
+
+<!-- ── ASIA TRIP CARD ── -->
+<a href="#" class="trip-card">
+  <div class="trip-cover">
+    <svg viewBox="0 0 390 210" xmlns="http://www.w3.org/2000/svg" style="font-family:'Barlow Condensed',sans-serif;">
+      <defs>
+        <radialGradient id="asiaGlow" cx="10%" cy="10%" r="65%">
+          <stop offset="0%" stop-color="#E8291C" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#1A0A08" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="390" height="210" fill="#1A0A08"/>
+      <rect width="390" height="210" fill="url(#asiaGlow)"/>
+      <!-- Grid -->
+      <line x1="0" y1="105" x2="390" y2="105" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
+      <line x1="195" y1="0" x2="195" y2="210" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
+      <!-- ASIA watermark -->
+      <text x="60" y="162" font-size="130" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.03)" letter-spacing="-0.02em">ASIA</text>
+      <!-- City stack -->
+      <text x="20" y="52"  font-size="22" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.9)" letter-spacing="0.02em">SHANGHAI</text>
+      <line x1="20" y1="60" x2="185" y2="60" stroke="rgba(232,41,28,0.3)" stroke-width="0.75"/>
+      <text x="20" y="82"  font-size="22" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.9)" letter-spacing="0.02em">JAPAN / S.KOREA</text>
+      <!-- TBD badge inline -->
+      <rect x="258" y="66" width="30" height="14" fill="rgba(232,41,28,0.3)" rx="1"/>
+      <text x="273" y="77" font-size="7" font-weight="800" fill="#E8291C" text-anchor="middle" letter-spacing="0.1em">TBD</text>
+      <line x1="20" y1="90" x2="290" y2="90" stroke="rgba(232,41,28,0.3)" stroke-width="0.75"/>
+      <text x="20" y="112" font-size="22" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.9)" letter-spacing="0.02em">HO CHI MINH</text>
+      <line x1="20" y1="120" x2="215" y2="120" stroke="rgba(232,41,28,0.3)" stroke-width="0.75"/>
+      <text x="20" y="142" font-size="22" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.9)" letter-spacing="0.02em">HONG KONG</text>
+      <!-- Flight arc -->
+      <path d="M 22 178 Q 195 148 368 178" stroke="#E8291C" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.85"/>
+      <circle cx="22"  cy="178" r="3" fill="#E8291C"/>
+      <circle cx="368" cy="178" r="3" fill="#E8291C"/>
+      <text x="29"  y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">NYC</text>
+      <text x="339" y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">HKG</text>
+      <!-- Year badge -->
+      <rect x="320" y="14" width="54" height="23" fill="#E8291C" rx="2"/>
+      <text x="347" y="29" font-size="12" font-weight="800" fill="white" text-anchor="middle" letter-spacing="0.06em">2026</text>
+    </svg>
+  </div>
+  <div class="trip-body">
+    <div class="trip-body__top">
+      <div class="trip-dates">Oct 9 – Oct 20 · 11 nights</div>
+      <div class="trip-badge badge--upcoming">Upcoming</div>
+    </div>
+    <div class="trip-cities">
+      <span class="city-pill">Shanghai</span>
+      <span class="city-pill">Japan / S.Korea</span>
+      <span class="city-pill">Ho Chi Minh</span>
+      <span class="city-pill">Hong Kong</span>
+    </div>
+  </div>
   <div class="trip-arrow">
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
       <path d="M2 6h8M6 2l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
