@@ -1924,6 +1924,12 @@
 </div>
 
 <script>
+  // Fallback to localStorage when running outside the Claude app
+  window.storage = window.storage || {
+    get: (key) => Promise.resolve({ value: localStorage.getItem(key) }),
+    set: (key, val) => { localStorage.setItem(key, val); return Promise.resolve(); }
+  };
+
   function switchTab(name) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
