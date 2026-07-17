@@ -166,6 +166,101 @@
     color: var(--ink-light);
     opacity: 0.35;
   }
+
+  /* ── EDIT BUTTON ── */
+  .trip-edit-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    border: 1.5px solid rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .trip-card:hover .trip-edit-btn,
+  .trip-card:focus-within .trip-edit-btn,
+  .trip-edit-btn.visible { opacity: 1; }
+
+  /* ── RENAME MODAL ── */
+  .rename-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,10,8,0.6);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .rename-overlay.open { display: flex; }
+  .rename-box {
+    background: var(--white);
+    width: 100%;
+    max-width: 360px;
+    padding: 24px 20px 20px;
+    border-top: 4px solid var(--red);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  }
+  .rename-box__label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+  }
+  .rename-box__field {
+    width: 100%;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--off-white);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    padding: 10px 14px;
+    outline: none;
+    letter-spacing: 0.01em;
+    transition: border-color 150ms;
+  }
+  .rename-box__field:focus { border-color: var(--red); background: #fff; }
+  .rename-box__hint {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .rename-box__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .rename-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: opacity 0.15s;
+  }
+  .rename-btn--save { background: var(--red); color: #fff; flex: 1; }
+  .rename-btn--cancel { background: var(--off-white); color: var(--ink-mid); }
+  .rename-btn:active { opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -238,7 +333,7 @@
 <div class="section-label">Upcoming</div>
 
 <!-- ── PARIS & PORTUGAL CARD ── -->
-<a href="summer-2026.html" class="trip-card">
+<a href="summer-2026.html" class="trip-card" id="card-europe">
   <div class="trip-cover">
     <svg viewBox="0 0 390 210" xmlns="http://www.w3.org/2000/svg" style="font-family:'Barlow Condensed',sans-serif;">
       <defs>
@@ -247,31 +342,27 @@
           <stop offset="100%" stop-color="#1A0A08" stop-opacity="0"/>
         </radialGradient>
       </defs>
-
       <rect width="390" height="210" fill="#1A0A08"/>
       <rect width="390" height="210" fill="url(#cardGlow)"/>
-
-      <!-- Grid -->
       <line x1="0" y1="105" x2="390" y2="105" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
       <line x1="195" y1="0" x2="195" y2="210" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
-
-      <!-- Watermark -->
       <text x="8" y="162" font-size="96" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.035)" letter-spacing="-0.02em">EUROPE</text>
-
-      <!-- Theme title -->
-      <text x="20" y="68"  font-size="44" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.5)" letter-spacing="0.01em">SUMMER IN</text>
-      <text x="20" y="130" font-size="76" font-weight="800" font-style="italic" fill="white" letter-spacing="-0.02em">EUROPE</text>
-
-      <!-- Flight path -->
+      <text id="europe-line1" x="20" y="68"  font-size="44" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.5)" letter-spacing="0.01em">SUMMER IN</text>
+      <text id="europe-line2" x="20" y="130" font-size="76" font-weight="800" font-style="italic" fill="white" letter-spacing="-0.02em">EUROPE</text>
       <path d="M 22 178 Q 195 152 368 178" stroke="#E8291C" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.85"/>
       <circle cx="22"  cy="178" r="3" fill="#E8291C"/>
       <circle cx="368" cy="178" r="3" fill="#E8291C"/>
       <text x="29"  y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">JFK</text>
       <text x="339" y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">OPO</text>
-
-      <!-- Year badge -->
       <rect x="320" y="14" width="54" height="23" fill="#E8291C" rx="2"/>
       <text x="347" y="29" font-size="12" font-weight="800" fill="white" text-anchor="middle" letter-spacing="0.06em">2026</text>
+    </svg>
+  </div>
+
+  <!-- Edit button -->
+  <div class="trip-edit-btn" id="edit-europe" title="Rename trip" onclick="openRename(event,'europe','SUMMER IN','EUROPE')">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M8.5 1.5l2 2L4 10H2v-2L8.5 1.5z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
     </svg>
   </div>
 
@@ -287,7 +378,6 @@
       <span class="city-pill">Porto</span>
     </div>
   </div>
-
   <div class="trip-arrow">
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
       <path d="M2 6h8M6 2l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -296,7 +386,7 @@
 </a>
 
 <!-- ── ASIA TRIP CARD ── -->
-<a href="#" class="trip-card">
+<a href="asia-fall-2026.html" class="trip-card" id="card-asia">
   <div class="trip-cover">
     <svg viewBox="0 0 390 210" xmlns="http://www.w3.org/2000/svg" style="font-family:'Barlow Condensed',sans-serif;">
       <defs>
@@ -307,25 +397,28 @@
       </defs>
       <rect width="390" height="210" fill="#1A0A08"/>
       <rect width="390" height="210" fill="url(#asiaGlow)"/>
-      <!-- Grid -->
       <line x1="0" y1="105" x2="390" y2="105" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
       <line x1="195" y1="0" x2="195" y2="210" stroke="rgba(232,41,28,0.07)" stroke-width="0.75"/>
-      <!-- Watermark -->
       <text x="30" y="162" font-size="130" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.03)" letter-spacing="-0.02em">ASIA</text>
-      <!-- Theme title -->
-      <text x="20" y="68"  font-size="44" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.5)" letter-spacing="0.01em">ORIENTAL</text>
-      <text x="20" y="140" font-size="96" font-weight="800" font-style="italic" fill="white" letter-spacing="-0.03em">FALL</text>
-      <!-- Flight arc -->
+      <text id="asia-line1" x="20" y="68"  font-size="44" font-weight="800" font-style="italic" fill="rgba(255,255,255,0.5)" letter-spacing="0.01em">ORIENTAL</text>
+      <text id="asia-line2" x="20" y="140" font-size="96" font-weight="800" font-style="italic" fill="white" letter-spacing="-0.03em">FALL</text>
       <path d="M 22 178 Q 195 148 368 178" stroke="#E8291C" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.85"/>
       <circle cx="22"  cy="178" r="3" fill="#E8291C"/>
       <circle cx="368" cy="178" r="3" fill="#E8291C"/>
       <text x="29"  y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">NYC</text>
       <text x="339" y="191" font-size="8" font-weight="700" fill="rgba(255,255,255,0.38)" letter-spacing="0.1em">HKG</text>
-      <!-- Year badge -->
       <rect x="320" y="14" width="54" height="23" fill="#E8291C" rx="2"/>
       <text x="347" y="29" font-size="12" font-weight="800" fill="white" text-anchor="middle" letter-spacing="0.06em">2026</text>
     </svg>
   </div>
+
+  <!-- Edit button -->
+  <div class="trip-edit-btn" id="edit-asia" title="Rename trip" onclick="openRename(event,'asia','ORIENTAL','FALL')">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M8.5 1.5l2 2L4 10H2v-2L8.5 1.5z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
   <div class="trip-body">
     <div class="trip-body__top">
       <div class="trip-dates">Oct 9 – Oct 20 · 11 nights</div>
@@ -359,6 +452,91 @@
 </div>
 
 <div class="footer">Nomad · Travel Companion</div>
+
+<!-- ── RENAME MODAL ── -->
+<div class="rename-overlay" id="rename-overlay" onclick="closeRenameIfBg(event)">
+  <div class="rename-box">
+    <div class="rename-box__label">Rename trip</div>
+    <input class="rename-box__field" id="rename-line1" type="text" placeholder="SUBTITLE">
+    <input class="rename-box__field" id="rename-line2" type="text" placeholder="MAIN TITLE" style="margin-top:8px;">
+    <div class="rename-box__hint">Two lines — subtitle (dim) + main title (bold). Both will appear on the card cover.</div>
+    <div class="rename-box__actions">
+      <button class="rename-btn rename-btn--cancel" onclick="closeRename()">Cancel</button>
+      <button class="rename-btn rename-btn--save" onclick="saveRename()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // localStorage shim
+  window.storage = window.storage || {
+    get: k => Promise.resolve({ value: localStorage.getItem(k) }),
+    set: (k, v) => { localStorage.setItem(k, v); return Promise.resolve(); }
+  };
+
+  let _activeCard = null;
+
+  function openRename(e, card, defaultLine1, defaultLine2) {
+    e.preventDefault();
+    e.stopPropagation();
+    _activeCard = card;
+    const l1 = localStorage.getItem('trip-name-' + card + '-1') || defaultLine1;
+    const l2 = localStorage.getItem('trip-name-' + card + '-2') || defaultLine2;
+    document.getElementById('rename-line1').value = l1;
+    document.getElementById('rename-line2').value = l2;
+    document.getElementById('rename-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('rename-line2').focus(), 80);
+  }
+
+  function closeRename() {
+    document.getElementById('rename-overlay').classList.remove('open');
+    _activeCard = null;
+  }
+
+  function closeRenameIfBg(e) {
+    if (e.target === document.getElementById('rename-overlay')) closeRename();
+  }
+
+  function saveRename() {
+    const card = _activeCard;
+    const l1 = document.getElementById('rename-line1').value.trim().toUpperCase();
+    const l2 = document.getElementById('rename-line2').value.trim().toUpperCase();
+    if (!l1 && !l2) { closeRename(); return; }
+    localStorage.setItem('trip-name-' + card + '-1', l1);
+    localStorage.setItem('trip-name-' + card + '-2', l2);
+    applyName(card, l1, l2);
+    closeRename();
+  }
+
+  function applyName(card, l1, l2) {
+    const el1 = document.getElementById(card + '-line1');
+    const el2 = document.getElementById(card + '-line2');
+    if (el1 && l1) el1.textContent = l1;
+    if (el2 && l2) el2.textContent = l2;
+  }
+
+  // Restore saved names on load
+  ['europe', 'asia'].forEach(card => {
+    const l1 = localStorage.getItem('trip-name-' + card + '-1');
+    const l2 = localStorage.getItem('trip-name-' + card + '-2');
+    if (l1 || l2) applyName(card, l1, l2);
+  });
+
+  // Show edit buttons on touch (tap the cover area reveals them briefly)
+  document.querySelectorAll('.trip-edit-btn').forEach(btn => {
+    btn.addEventListener('touchstart', e => { e.stopPropagation(); }, { passive: true });
+  });
+  document.querySelectorAll('.trip-card').forEach(card => {
+    card.addEventListener('touchstart', () => {
+      const btn = card.querySelector('.trip-edit-btn');
+      if (btn) { btn.classList.add('visible'); setTimeout(() => btn.classList.remove('visible'), 3000); }
+    }, { passive: true });
+  });
+
+  // Enter key saves
+  document.getElementById('rename-line1').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('rename-line2').focus(); });
+  document.getElementById('rename-line2').addEventListener('keydown', e => { if (e.key === 'Enter') saveRename(); });
+</script>
 
 </body>
 </html>
