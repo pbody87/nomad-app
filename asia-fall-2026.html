@@ -733,8 +733,8 @@ window.storage = window.storage || {
 <div class="app-header" style="position:relative;">
   <div class="save-indicator" id="save-indicator"></div>
   <div class="header-eyebrow">Oriental Fall 2026 · Asia</div>
-  <div class="header-title">Shanghai.<br>Hong Kong.</div>
-  <div class="header-subtitle">Oct 9 – Oct 20 · 11 nights · 4 cities</div>
+  <div class="header-title">Shanghai.<br>Saigon.<br>Hong Kong.</div>
+  <div class="header-subtitle">Oct 8 – Oct 19 · 11 nights · 4 cities</div>
   <div class="countdown-badge" id="countdown-badge">
     <span class="countdown-badge__num" id="countdown-num">—</span>
     <span class="countdown-badge__label" id="countdown-label">days to go</span>
@@ -772,8 +772,18 @@ window.storage = window.storage || {
           <div class="hero-stat-label">Countries</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num">—</div>
+          <div class="hero-stat-num">7</div>
           <div class="hero-stat-label">Bookings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERT: double hotel -->
+    <div style="padding: 16px 24px 0;">
+      <div class="alert-card" style="background:#fff7ed;border-color:#fed7aa;border-left:4px solid #ea580c;">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text" style="color:#7c2d12;">
+          <strong>Double-check Shanghai hotels:</strong> You have two confirmed bookings for Oct 9–12 — SAVHE Hotel North Bund and The Shanghai EDITION. Confirm which one you're keeping and cancel the other.
         </div>
       </div>
     </div>
@@ -787,72 +797,124 @@ window.storage = window.storage || {
       </div>
     </div>
 
-    <!-- DAY 1: Oct 9 -->
+    <!-- DAY 1: Oct 8 — DEPART NYC -->
     <div class="day-header">
-      <div class="day-num">09</div>
+      <div class="day-num">08</div>
       <div class="day-info">
-        <div class="day-name">Friday, October 9</div>
-        <div class="day-sub">Departure · New York → Shanghai</div>
+        <div class="day-name">Thursday, October 8</div>
+        <div class="day-sub">Departure · New York → Hong Kong → Shanghai</div>
       </div>
     </div>
     <div class="cards-in-day">
       <div class="event-card flight">
         <div class="card-top">
           <div>
-            <div class="card-type">Flight · Outbound</div>
-            <div class="card-title">JFK → Shanghai PVG</div>
+            <div class="card-type">Flight · Cathay Pacific · CX841</div>
+            <div class="card-title">JFK → Hong Kong HKG</div>
           </div>
           <div class="card-icon">✈️</div>
         </div>
         <div class="card-meta">
-          <span class="meta-pill highlight">TBD · Add booking</span>
-          <span class="meta-pill">~16h direct or connecting</span>
+          <span class="meta-pill highlight">10:00am departure</span>
+          <span class="meta-pill">15h 55m</span>
+          <span class="meta-pill">Airbus A350-900</span>
+          <span class="meta-pill">Economy Light · Class N</span>
+          <span class="meta-pill">Terminal 8 JFK</span>
         </div>
         <div class="card-ref">
-          <span class="ref-label">Arrives</span>
-          <span class="ref-value">Oct 10 (time zone +13h)</span>
+          <span class="ref-label">Arrives HKG</span>
+          <span class="ref-value">Fri Oct 9 · 1:55pm · Terminal 1</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-1" placeholder="Add notes…"></textarea></div></div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-1a" placeholder="Add notes…"></textarea></div></div>
       </div>
     </div>
 
-    <!-- DAY 2: Oct 10 -->
+    <!-- DAY 2: Oct 9 — CONNECT HKG → PVG, ARRIVE SHANGHAI -->
     <div class="day-header">
-      <div class="day-num">10</div>
+      <div class="day-num">09</div>
       <div class="day-info">
-        <div class="day-name">Saturday, October 10</div>
-        <div class="day-sub">Shanghai · Arrival day</div>
+        <div class="day-name">Friday, October 9</div>
+        <div class="day-sub">Hong Kong layover → Arrive Shanghai</div>
       </div>
     </div>
     <div class="cards-in-day">
+      <div class="alert-card">
+        <div class="alert-icon">🔁</div>
+        <div class="alert-text">
+          <strong>Connect at HKG · 1h 5m.</strong> Short connection — do not check bags through if possible. Stay in Terminal 1 for CX380.
+        </div>
+      </div>
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Cathay Pacific · CX380</div>
+            <div class="card-title">Hong Kong HKG → Shanghai PVG</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">3:00pm departure</span>
+          <span class="meta-pill">2h 50m</span>
+          <span class="meta-pill">Boeing 777-300</span>
+          <span class="meta-pill">Economy Light · Class N</span>
+          <span class="meta-pill">HKG Terminal 1</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives PVG</span>
+          <span class="ref-value">Fri Oct 9 · 5:50pm · Pudong T2</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-1b" placeholder="Add notes…"></textarea></div></div>
+      </div>
       <div class="event-card hotel">
         <div class="card-top">
           <div>
-            <div class="card-type">Hotel · Shanghai · 3 nights</div>
-            <div class="card-title">TBD — Shanghai Hotel</div>
+            <div class="card-type">Hotel · Shanghai · 3 nights · ⚠️ Confirm which</div>
+            <div class="card-title">The Shanghai EDITION</div>
           </div>
           <div class="card-icon">🏨</div>
         </div>
         <div class="card-meta">
-          <span class="meta-pill highlight">Check-in Oct 10</span>
-          <span class="meta-pill">Check-out Oct 12</span>
-          <span class="meta-pill">Add booking details</span>
+          <span class="meta-pill highlight">Check-in after 3:00pm · Oct 9</span>
+          <span class="meta-pill">Check-out Oct 12 by 12:00pm</span>
+          <span class="meta-pill">5-star · Nanjing Road</span>
         </div>
         <div class="card-ref">
           <span class="ref-label">Address</span>
-          <span class="ref-value">TBD — upload your booking</span>
+          <span class="ref-value">199 Nanjing Road East, Shanghai 200002</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-sha" placeholder="Add notes…"></textarea></div></div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-edition" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Shanghai · 3 nights · ⚠️ Confirm which</div>
+            <div class="card-title">SAVHE Hotel North Bund</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in Oct 9</span>
+          <span class="meta-pill">Check-out Oct 12 · 3 nights</span>
+          <span class="meta-pill">Premier Queen Room</span>
+          <span class="meta-pill">CNY 4,713</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Booking ref</span>
+          <span class="ref-value">997950122 · Trip.com · Confirmed</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-savhe" placeholder="Add notes…"></textarea></div></div>
       </div>
     </div>
 
-    <!-- DAY 3: Oct 11 -->
+    <!-- DAY 3: Oct 10 -->
     <div class="day-header">
-      <div class="day-num">11</div>
+      <div class="day-num">10</div>
       <div class="day-info">
-        <div class="day-name">Sunday, October 11</div>
+        <div class="day-name">Saturday, October 10</div>
         <div class="day-sub">Shanghai · Explore</div>
       </div>
     </div>
@@ -860,7 +922,7 @@ window.storage = window.storage || {
       <div class="event-card activity">
         <div class="card-top">
           <div>
-            <div class="card-type">Neighborhood · Bund + Old City</div>
+            <div class="card-type">Neighborhood · Waterfront</div>
             <div class="card-title">The Bund + Yu Garden</div>
           </div>
           <div class="card-icon">🏯</div>
@@ -868,11 +930,11 @@ window.storage = window.storage || {
         <div class="card-meta">
           <span class="meta-pill highlight">Morning walk</span>
           <span class="meta-pill">Bund skyline · free</span>
-          <span class="meta-pill">Yu Garden entry ~¥40</span>
+          <span class="meta-pill">Yu Garden ~¥40</span>
         </div>
         <div class="card-ref">
           <span class="ref-label">Tip</span>
-          <span class="ref-value">Bund is best at sunrise or after dark</span>
+          <span class="ref-value">Best at sunrise or after dark — hotel is steps away</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
         <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-bund" placeholder="Add notes…"></textarea></div></div>
@@ -880,7 +942,7 @@ window.storage = window.storage || {
       <div class="event-card activity">
         <div class="card-top">
           <div>
-            <div class="card-type">Neighborhood · Arts</div>
+            <div class="card-type">Neighborhood · Arts + Food</div>
             <div class="card-title">French Concession</div>
           </div>
           <div class="card-icon">🎨</div>
@@ -892,14 +954,45 @@ window.storage = window.storage || {
         </div>
         <div class="card-ref">
           <span class="ref-label">Tip</span>
-          <span class="ref-value">Add any restaurant/gallery bookings here</span>
+          <span class="ref-value">Add any restaurant bookings in the notes</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
         <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-concession" placeholder="Add notes…"></textarea></div></div>
       </div>
     </div>
 
-    <!-- DAY 4: Oct 12 -->
+    <!-- DAY 4-5: Oct 11 -->
+    <div class="day-header">
+      <div class="day-num">11</div>
+      <div class="day-info">
+        <div class="day-name">Sunday, October 11</div>
+        <div class="day-sub">Shanghai · Last full day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Day use · Museums</div>
+            <div class="card-title">Shanghai Museum + Xintiandi</div>
+          </div>
+          <div class="card-icon">🏛️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Full day</span>
+          <span class="meta-pill">Free museum entry</span>
+          <span class="meta-pill">Check-out tomorrow</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Note</span>
+          <span class="ref-value">Add any bookings / dinner reservations</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-sha-day3" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- DAY 5: Oct 12 -->
     <div class="day-header">
       <div class="day-num">12</div>
       <div class="day-info">
@@ -908,11 +1001,17 @@ window.storage = window.storage || {
       </div>
     </div>
     <div class="cards-in-day">
+      <div class="alert-card" style="background:#f0fdf4;border-color:#bbf7d0;border-left:4px solid #059669;">
+        <div class="alert-icon">⏰</div>
+        <div class="alert-text" style="color:#166534;">
+          Check out of Shanghai hotel by <strong style="color:#059669;">12:00pm</strong>. Head to PVG for your onward flight.
+        </div>
+      </div>
       <div class="event-card flight">
         <div class="card-top">
           <div>
-            <div class="card-type">Flight · Leg 2</div>
-            <div class="card-title">Shanghai → Japan or Korea</div>
+            <div class="card-type">Flight · Leg 2 · TBD</div>
+            <div class="card-title">Shanghai PVG → Japan or Korea</div>
           </div>
           <div class="card-icon">✈️</div>
         </div>
@@ -938,7 +1037,6 @@ window.storage = window.storage || {
       </div>
     </div>
 
-    <!-- DAY 4 cont / DAY 5-6: Oct 12-15 -->
     <div class="day-header">
       <div class="day-num">12–15</div>
       <div class="day-info">
@@ -970,7 +1068,7 @@ window.storage = window.storage || {
       <div class="alert-card" style="background:#fff7ed;border-color:#fed7aa;border-left:4px solid #ea580c;">
         <div class="alert-icon">📍</div>
         <div class="alert-text" style="color:#7c2d12;">
-          <strong>Decide:</strong> Japan or South Korea for Oct 12–15? Once confirmed, upload your bookings and this page will update automatically.
+          <strong>Still to decide:</strong> Japan or South Korea for Oct 12–15? Upload bookings when ready.
         </div>
       </div>
     </div>
@@ -984,7 +1082,6 @@ window.storage = window.storage || {
       </div>
     </div>
 
-    <!-- DAY 7-11: Oct 15-19 -->
     <div class="day-header">
       <div class="day-num">15</div>
       <div class="day-info">
@@ -996,7 +1093,7 @@ window.storage = window.storage || {
       <div class="event-card flight">
         <div class="card-top">
           <div>
-            <div class="card-type">Flight · Leg 3</div>
+            <div class="card-type">Flight · Leg 3 · TBD</div>
             <div class="card-title">→ Ho Chi Minh SGN</div>
           </div>
           <div class="card-icon">✈️</div>
@@ -1007,7 +1104,7 @@ window.storage = window.storage || {
         </div>
         <div class="card-ref">
           <span class="ref-label">Arrives</span>
-          <span class="ref-value">Tan Son Nhat International SGN</span>
+          <span class="ref-value">Tan Son Nhat International · Terminal 2</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
         <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-3" placeholder="Add notes…"></textarea></div></div>
@@ -1015,14 +1112,14 @@ window.storage = window.storage || {
       <div class="event-card hotel">
         <div class="card-top">
           <div>
-            <div class="card-type">Hotel · Ho Chi Minh City · 4 nights</div>
+            <div class="card-type">Hotel · Ho Chi Minh City · 3 nights</div>
             <div class="card-title">TBD — Saigon Hotel</div>
           </div>
           <div class="card-icon">🏨</div>
         </div>
         <div class="card-meta">
           <span class="meta-pill highlight">Check-in Oct 15</span>
-          <span class="meta-pill">Check-out Oct 19</span>
+          <span class="meta-pill">Check-out Oct 18 · early morning</span>
           <span class="meta-pill">Upload booking to fill in</span>
         </div>
         <div class="card-ref">
@@ -1088,108 +1185,114 @@ window.storage = window.storage || {
     <div class="country-block">
       <div class="country-label">
         <div class="country-flag">🇭🇰</div>
-        <div class="country-name">Hong Kong</div>
+        <div class="country-name">Hong Kong · Layover Day</div>
         <div class="country-line"></div>
       </div>
     </div>
 
-    <!-- DAY 11-12: Oct 19-20 -->
+    <!-- Oct 18: Depart SGN, long HKG layover -->
     <div class="day-header">
-      <div class="day-num">19</div>
+      <div class="day-num">18</div>
       <div class="day-info">
-        <div class="day-name">Sunday, October 19</div>
-        <div class="day-sub">Ho Chi Minh → Hong Kong · Travel day</div>
+        <div class="day-name">Sunday, October 18</div>
+        <div class="day-sub">Ho Chi Minh → Hong Kong · Free day in HK</div>
       </div>
     </div>
     <div class="cards-in-day">
+      <div class="alert-card">
+        <div class="alert-icon">🌅</div>
+        <div class="alert-text">
+          <strong>Early morning departure:</strong> CX744 departs SGN at 6:55am. Be at Tan Son Nhat T2 by 5:00am. Pre-arrange transport the night before.
+        </div>
+      </div>
       <div class="event-card flight">
         <div class="card-top">
           <div>
-            <div class="card-type">Flight · Leg 4</div>
-            <div class="card-title">SGN → Hong Kong HKG</div>
+            <div class="card-type">Flight · Cathay Pacific · CX744</div>
+            <div class="card-title">Ho Chi Minh SGN → HKG</div>
           </div>
           <div class="card-icon">✈️</div>
         </div>
         <div class="card-meta">
-          <span class="meta-pill highlight">TBD · Add booking</span>
-          <span class="meta-pill">SGN → HKG · ~2h 30m</span>
+          <span class="meta-pill highlight">6:55am departure</span>
+          <span class="meta-pill">2h 45m</span>
+          <span class="meta-pill">Airbus A321neo</span>
+          <span class="meta-pill">Economy Light · Class N</span>
+          <span class="meta-pill">SGN Terminal 2</span>
         </div>
         <div class="card-ref">
-          <span class="ref-label">Arrives</span>
-          <span class="ref-value">Hong Kong International HKG</span>
+          <span class="ref-label">Arrives HKG</span>
+          <span class="ref-value">Sun Oct 18 · 10:40am · Terminal 1</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-4" placeholder="Add notes…"></textarea></div></div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-cx744" placeholder="Add notes…"></textarea></div></div>
       </div>
-      <div class="event-card hotel">
-        <div class="card-top">
-          <div>
-            <div class="card-type">Hotel · Hong Kong · 1 night</div>
-            <div class="card-title">TBD — HK Hotel</div>
-          </div>
-          <div class="card-icon">🏨</div>
-        </div>
-        <div class="card-meta">
-          <span class="meta-pill highlight">Check-in Oct 19</span>
-          <span class="meta-pill">Check-out Oct 20</span>
-          <span class="meta-pill">Upload booking to fill in</span>
-        </div>
-        <div class="card-ref">
-          <span class="ref-label">Area</span>
-          <span class="ref-value">Kowloon or Central recommended</span>
-        </div>
-        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-hkg" placeholder="Add notes…"></textarea></div></div>
-      </div>
-    </div>
 
-    <!-- DAY 12: Oct 20 -->
-    <div class="day-header">
-      <div class="day-num">20</div>
-      <div class="day-info">
-        <div class="day-name">Monday, October 20</div>
-        <div class="day-sub">Hong Kong · Fly home</div>
+      <div class="alert-card" style="background:#f0fdf4;border-color:#bbf7d0;border-left:4px solid #059669;">
+        <div class="alert-icon">🎉</div>
+        <div class="alert-text" style="color:#166534;">
+          <strong>15h 45m HKG layover</strong> — you arrive at 10:40am and don't fly out until 2:25am Monday. Plenty of time to go into the city! Store luggage at HKG and take the Airport Express into Central (~24 min, HKD $115).
+        </div>
       </div>
-    </div>
-    <div class="cards-in-day">
+
       <div class="event-card activity">
         <div class="card-top">
           <div>
-            <div class="card-type">Morning · Before flight</div>
+            <div class="card-type">Layover Day · HK City</div>
             <div class="card-title">Victoria Peak + Dim Sum</div>
           </div>
           <div class="card-icon">🌄</div>
         </div>
         <div class="card-meta">
-          <span class="meta-pill highlight">Morning</span>
+          <span class="meta-pill highlight">Afternoon / evening</span>
           <span class="meta-pill">Peak Tram from Central</span>
-          <span class="meta-pill">City + harbor views</span>
+          <span class="meta-pill">Harbor views at sunset</span>
         </div>
         <div class="card-ref">
           <span class="ref-label">Tip</span>
-          <span class="ref-value">Tim Ho Wan for dim sum · book ahead</span>
+          <span class="ref-value">Tim Ho Wan dim sum · Tsim Sha Tsui for skyline at night</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-peak" placeholder="Add notes…"></textarea></div></div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hk-layover" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- Oct 19: Overnight HKG → JFK -->
+    <div class="day-header">
+      <div class="day-num">19</div>
+      <div class="day-info">
+        <div class="day-name">Monday, October 19</div>
+        <div class="day-sub">Hong Kong → New York · Fly home 🏠</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="alert-card" style="background:#f0fdf4;border-color:#bbf7d0;border-left:4px solid #059669;">
+        <div class="alert-icon">⏰</div>
+        <div class="alert-text" style="color:#166534;">
+          Be back at HKG by <strong style="color:#059669;">12:30am</strong> for 2:25am departure. Allow 90 min for Airport Express + check-in. Head to airport around midnight.
+        </div>
       </div>
       <div class="event-card flight">
         <div class="card-top">
           <div>
-            <div class="card-type">Flight · Return home</div>
-            <div class="card-title">Hong Kong HKG → JFK/EWR</div>
+            <div class="card-type">Flight · Cathay Pacific · CX844 · Return</div>
+            <div class="card-title">Hong Kong HKG → JFK</div>
           </div>
           <div class="card-icon">✈️</div>
         </div>
         <div class="card-meta">
-          <span class="meta-pill highlight">TBD · Add booking</span>
-          <span class="meta-pill">~16h direct or connecting</span>
+          <span class="meta-pill highlight">2:25am departure</span>
+          <span class="meta-pill">15h 35m</span>
+          <span class="meta-pill">Airbus A350-900</span>
+          <span class="meta-pill">Economy Light · Class N</span>
+          <span class="meta-pill">HKG Terminal 1</span>
         </div>
         <div class="card-ref">
-          <span class="ref-label">Arrives</span>
-          <span class="ref-value">New York · Oct 20 (cross dateline)</span>
+          <span class="ref-label">Arrives JFK</span>
+          <span class="ref-value">Mon Oct 19 · 6:00am · Terminal 8</span>
         </div>
         <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
-        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-return" placeholder="Add notes…"></textarea></div></div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-cx844" placeholder="Add notes…"></textarea></div></div>
       </div>
     </div>
 
@@ -1330,34 +1433,62 @@ window.storage = window.storage || {
     <div class="info-section">
 
       <div class="info-card">
-        <div class="info-card-title">✈️ Flights Overview</div>
+        <div class="info-card-title">✈️ Flights</div>
         <div class="info-row">
-          <span class="info-key">Outbound</span>
-          <span class="info-val">JFK → Shanghai PVG · Oct 9 · TBD</span>
+          <span class="info-key">Outbound leg 1</span>
+          <span class="info-val">CX841 · Oct 8 · JFK T8 10:00am → HKG T1 1:55pm</span>
         </div>
         <div class="info-row">
-          <span class="info-key">Leg 2</span>
-          <span class="info-val">Shanghai → Japan/Korea · Oct 12 · TBD</span>
+          <span class="info-key">Outbound leg 2</span>
+          <span class="info-val">CX380 · Oct 9 · HKG T1 3:00pm → PVG T2 5:50pm</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Total outbound</span>
+          <span class="info-val">19h 50m · 1 stop HKG (1h 5m)</span>
         </div>
         <div class="info-row">
           <span class="info-key">Leg 3</span>
-          <span class="info-val">Japan/Korea → Ho Chi Minh · Oct 15 · TBD</span>
+          <span class="info-val">Shanghai PVG → Japan/Korea · Oct 12 · TBD</span>
         </div>
         <div class="info-row">
           <span class="info-key">Leg 4</span>
-          <span class="info-val">Ho Chi Minh SGN → Hong Kong HKG · Oct 19 · TBD</span>
+          <span class="info-val">Japan/Korea → Ho Chi Minh SGN · Oct 15 · TBD</span>
         </div>
         <div class="info-row">
-          <span class="info-key">Return</span>
-          <span class="info-val">Hong Kong HKG → JFK/EWR · Oct 20 · TBD</span>
+          <span class="info-key">Return leg 1</span>
+          <span class="info-val">CX744 · Oct 18 · SGN T2 6:55am → HKG T1 10:40am</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">HKG layover</span>
+          <span class="info-val">15h 45m · free day in Hong Kong</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Return leg 2</span>
+          <span class="info-val">CX844 · Oct 19 · HKG T1 2:25am → JFK T8 6:00am</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Total return</span>
+          <span class="info-val">34h 5m · 1 stop HKG (15h 45m)</span>
         </div>
       </div>
 
       <div class="info-card">
         <div class="info-card-title">🏨 Accommodation</div>
         <div class="info-row">
-          <span class="info-key">Shanghai</span>
-          <span class="info-val">Oct 10–12 · 2 nights · TBD</span>
+          <span class="info-key">Shanghai (opt 1)</span>
+          <span class="info-val">The Shanghai EDITION · Oct 9–12 · 3 nights</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">EDITION address</span>
+          <span class="info-val">199 Nanjing Road East, Shanghai 200002</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Shanghai (opt 2)</span>
+          <span class="info-val">SAVHE Hotel North Bund · Oct 9–12 · CNY 4,713</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">SAVHE ref</span>
+          <span class="info-val">997950122 · Trip.com · Premier Queen Room</span>
         </div>
         <div class="info-row">
           <span class="info-key">Japan/Korea</span>
@@ -1365,11 +1496,11 @@ window.storage = window.storage || {
         </div>
         <div class="info-row">
           <span class="info-key">Ho Chi Minh</span>
-          <span class="info-val">Oct 15–19 · 4 nights · TBD</span>
+          <span class="info-val">Oct 15–18 · 3 nights · TBD</span>
         </div>
         <div class="info-row">
           <span class="info-key">Hong Kong</span>
-          <span class="info-val">Oct 19–20 · 1 night · TBD</span>
+          <span class="info-val">Long layover day only · no hotel booked</span>
         </div>
       </div>
 
@@ -1422,26 +1553,42 @@ window.storage = window.storage || {
       </div>
 
       <div class="info-card">
-        <div class="info-card-title">⚡ Still To Book</div>
+        <div class="info-card-title">⚡ Still To Do</div>
+        <div class="info-row">
+          <span class="info-key">Shanghai hotels</span>
+          <span class="info-val" style="color:#E8291C;">Cancel one — EDITION or SAVHE, keep one</span>
+        </div>
         <div class="info-row">
           <span class="info-key">China visa</span>
           <span class="info-val" style="color:#E8291C;">Apply ASAP — 4–6 week lead time</span>
         </div>
         <div class="info-row">
           <span class="info-key">Vietnam e-visa</span>
-          <span class="info-val" style="color:#B45309;">Apply online at evisa.xuatnhapcanh.gov.vn</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">All flights</span>
-          <span class="info-val" style="color:#E8291C;">No bookings added yet</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">All hotels</span>
-          <span class="info-val" style="color:#E8291C;">No bookings added yet</span>
+          <span class="info-val" style="color:#B45309;">Apply online · ~$25 · evisa.gov.vn</span>
         </div>
         <div class="info-row">
           <span class="info-key">Japan vs Korea</span>
           <span class="info-val" style="color:#B45309;">Decide destination for Oct 12–15</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Leg 3 flight</span>
+          <span class="info-val" style="color:#B45309;">Shanghai → Japan/Korea · Oct 12 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Leg 4 flight</span>
+          <span class="info-val" style="color:#B45309;">Japan/Korea → Ho Chi Minh · Oct 15 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">HCMC hotel</span>
+          <span class="info-val" style="color:#B45309;">Oct 15–18 · 3 nights · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">JP/KR hotel</span>
+          <span class="info-val" style="color:#B45309;">Oct 12–15 · 3 nights · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">SGN early taxi</span>
+          <span class="info-val" style="color:#B45309;">Oct 18 · 5:00am to Tan Son Nhat T2 · pre-book</span>
         </div>
       </div>
 
@@ -1725,7 +1872,7 @@ async function loadExpenses() {
 
 // Countdown
 function updateCountdown() {
-  const dep = new Date('2026-10-09T00:00:00');
+  const dep = new Date('2026-10-08T00:00:00');
   const now = new Date();
   const diff = Math.ceil((dep - now) / 86400000);
   const numEl = document.getElementById('countdown-num');
