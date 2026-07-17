@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#E8291C">
+<title>Patty — Oriental Fall 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap');
+
+  :root {
+    --red: #E8291C;
+    --red-dark: #C0200F;
+    --red-deeper: #8B1208;
+    --white: #FFFFFF;
+    --off-white: #F7F3F0;
+    --ink: #1A0A08;
+    --ink-mid: #5C3030;
+    --ink-light: #A07070;
+    --border: rgba(232,41,28,0.15);
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 16px rgba(232,41,28,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--off-white);
+    color: var(--ink);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    padding: 52px 20px 14px;
+    background: var(--red);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 2px;
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .tabs {
+    display: flex;
+    padding: 0 20px;
+    background: var(--red-dark);
+    gap: 0;
+  }
+
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    padding: 12px 16px 11px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+
+  .tab.active {
+    color: var(--white);
+    border-bottom-color: var(--white);
+  }
+
+  .content { padding: 0 0 100px; overflow-y: auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .event-card {
+    background: var(--white);
+    border-radius: 0;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.12s;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    border-left: 5px solid var(--red);
+    padding-bottom: 38px;
+  }
+
+  .event-card:active { transform: scale(0.99); }
+  .event-card::before { display: none; }
+  .event-card.flight   { border-left-color: var(--red); }
+  .event-card.hotel    { border-left-color: var(--ink); }
+  .event-card.activity { border-left-color: var(--red-deeper); }
+  .event-card.transport{ border-left-color: #8B4513; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 3px;
+  }
+
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 240px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .card-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .meta-pill {
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-mid);
+    background: var(--off-white);
+    border-radius: 3px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    letter-spacing: 0.02em;
+  }
+
+  .meta-pill.highlight {
+    color: var(--white);
+    background: var(--red);
+    border-color: var(--red);
+    font-weight: 700;
+  }
+
+  .card-ref {
+    margin-top: 11px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ref-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .ref-value {
+    font-size: 12px;
+    color: var(--ink-mid);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .alert-card {
+    background: #FFF5F5;
+    border: 1.5px solid #FECACA;
+    border-left: 4px solid var(--red);
+    border-radius: 0;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .alert-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #7F1D1D;
+    font-weight: 500;
+  }
+
+  .alert-text strong { color: var(--red); font-weight: 700; }
+
+  .packing-section { padding: 20px 20px 0; }
+  .packing-category { margin-bottom: 28px; }
+
+  .packing-cat-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .packing-cat-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--red);
+    opacity: 0.15;
+  }
+
+  .packing-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: background 0.12s;
+    background: var(--white);
+    margin-bottom: 4px;
+    border-left: 3px solid transparent;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .packing-item:hover { border-left-color: var(--red); background: #FFF5F5; }
+
+  .packing-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    border: 2px solid #D1D5DB;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+    font-size: 12px;
+    color: white;
+    font-weight: 800;
+  }
+
+  .packing-item.checked .packing-check {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .packing-item.checked .packing-text {
+    text-decoration: line-through;
+    color: var(--ink-light);
+  }
+
+  .packing-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: all 0.18s;
+  }
+
+  .packing-tag {
+    margin-left: auto;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    background: #FFF5F5;
+    padding: 3px 8px;
+    border: 1px solid #FECACA;
+    text-transform: uppercase;
+  }
+
+  .info-section { padding: 20px; }
+
+  .info-card {
+    background: var(--white);
+    border-radius: 0;
+    padding: 18px;
+    margin-bottom: 10px;
+    box-shadow: var(--card-shadow);
+    border-top: 3px solid var(--red);
+  }
+
+  .info-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--off-white);
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--ink-light); font-weight: 600; flex-shrink: 0; letter-spacing: 0.02em; }
+  .info-val { color: var(--ink); font-weight: 700; text-align: right; }
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: var(--ink);
+    border-top: 3px solid var(--red);
+    display: flex;
+    padding: 10px 0 26px;
+    z-index: 200;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: all 0.15s;
+  }
+
+  .nav-icon { font-size: 20px; }
+
+  .nav-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    transition: color 0.15s;
+  }
+
+  .nav-item.active .nav-label { color: var(--red); }
+
+  .hero-banner {
+    margin: 0;
+    background: var(--red);
+    border-radius: 0;
+    padding: 28px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    right: -40px;
+    bottom: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--red-dark);
+    opacity: 0.5;
+  }
+
+  .hero-banner::after {
+    content: 'ASIA';
+    position: absolute;
+    right: 12px;
+    top: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 80px;
+    font-weight: 800;
+    font-style: italic;
+    color: rgba(255,255,255,0.07);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px;
+  }
+
+  .hero-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 0.92;
+    margin-bottom: 20px;
+    color: #fff;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 16px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    padding: 0 8px;
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .day-header {
+    padding: 20px 20px 6px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+
+  .day-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--red);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    min-width: 60px;
+    opacity: 0.25;
+  }
+
+  .day-info { display: flex; flex-direction: column; }
+
+  .day-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+
+  .day-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .cards-in-day { padding: 0 20px 4px; }
+
+  .country-block { padding: 24px 20px 0; }
+  .country-label { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .country-flag { font-size: 22px; line-height: 1; }
+  .country-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    letter-spacing: 0.04em;
+  }
+  .country-line { flex: 1; height: 2px; background: var(--border); }
+
+  /* Expandable notes */
+  .card-expand-toggle {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-light);
+    font-size: 13px;
+    transition: transform 250ms ease;
+    cursor: pointer;
+    z-index: 2;
+    background: var(--white);
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+  }
+
+  .event-card.expanded .card-expand-toggle {
+    transform: rotate(180deg);
+    color: var(--red);
+  }
+
+  .card-notes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 280ms ease, margin-top 280ms ease;
+  }
+
+  .event-card.expanded .card-notes {
+    max-height: 200px;
+    margin-top: 12px;
+  }
+
+  .card-notes__inner {
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .card-notes__label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .card-notes__input {
+    width: 100%;
+    min-height: 52px;
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color 150ms;
+  }
+
+  .card-notes__input:focus { border-color: var(--red); background: #fff; }
+  .card-notes__input::placeholder { color: var(--ink-light); font-style: italic; }
+
+  /* Expense styles */
+  .expense-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--off-white);
+  }
+  .expense-row:last-of-type { border-bottom: none; }
+  .expense-row__name { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .expense-row__meta { font-size: 11px; color: var(--ink-light); font-weight: 500; margin-top: 2px; }
+  .expense-input {
+    width: 100%;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--ink);
+    background: var(--off-white);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 150ms, background 150ms;
+    -moz-appearance: textfield;
+  }
+  .expense-input::-webkit-outer-spin-button,
+  .expense-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .expense-input:focus { border-color: var(--red); background: #fff; }
+  .expense-input::placeholder { color: var(--ink-light); font-style: italic; }
+  .expense-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 4px;
+    margin-top: 4px;
+    border-top: 2px solid var(--off-white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+  }
+  .expense-subtotal span:last-child { font-size: 18px; color: var(--red); letter-spacing: -0.01em; }
+
+  .save-indicator {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    z-index: 101;
+    transition: background 200ms, transform 200ms;
+  }
+  .save-indicator--active {
+    background: #fff;
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+  }
+
+  .countdown-badge {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3px;
+    padding: 6px 12px 5px;
+    min-width: 58px;
+  }
+  .countdown-badge__num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .countdown-badge__label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- localStorage shim for GitHub Pages compatibility -->
+<script>
+window.storage = window.storage || {
+  get: (key) => Promise.resolve({ value: localStorage.getItem(key) }),
+  set: (key, val) => { localStorage.setItem(key, val); return Promise.resolve(); }
+};
+</script>
+
+<!-- BACK TO HOME -->
+<a href="index.html" style="display:flex;align-items:center;gap:6px;background:var(--ink);padding:10px 20px 9px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;">
+  <span style="font-size:14px;">←</span> All Trips
+</a>
+
+<!-- HEADER -->
+<div class="app-header" style="position:relative;">
+  <div class="save-indicator" id="save-indicator"></div>
+  <div class="header-eyebrow">Oriental Fall 2026 · Asia</div>
+  <div class="header-title">Shanghai.<br>Hong Kong.</div>
+  <div class="header-subtitle">Oct 9 – Oct 20 · 11 nights · 4 cities</div>
+  <div class="countdown-badge" id="countdown-badge">
+    <span class="countdown-badge__num" id="countdown-num">—</span>
+    <span class="countdown-badge__label" id="countdown-label">days to go</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="mainTabs">
+  <div class="tab active" onclick="switchTab('itinerary')">Itinerary</div>
+  <div class="tab" onclick="switchTab('packing')">Packing</div>
+  <div class="tab" onclick="switchTab('info')">Key Info</div>
+  <div class="tab" onclick="switchTab('expenses')">Expenses</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ═══════════ ITINERARY TAB ═══════════ -->
+  <div class="tab-panel active" id="tab-itinerary">
+
+    <div class="hero-banner">
+      <div class="hero-eyebrow">Your journey</div>
+      <div class="hero-headline">Shanghai.<br>Japan/Korea.<br>Saigon.<br>Hong Kong.</div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">11</div>
+          <div class="hero-stat-label">Nights</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Cities</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Countries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">—</div>
+          <div class="hero-stat-label">Bookings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTRY: CHINA -->
+    <div class="country-block">
+      <div class="country-label">
+        <div class="country-flag">🇨🇳</div>
+        <div class="country-name">China — Shanghai</div>
+        <div class="country-line"></div>
+      </div>
+    </div>
+
+    <!-- DAY 1: Oct 9 -->
+    <div class="day-header">
+      <div class="day-num">09</div>
+      <div class="day-info">
+        <div class="day-name">Friday, October 9</div>
+        <div class="day-sub">Departure · New York → Shanghai</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Outbound</div>
+            <div class="card-title">JFK → Shanghai PVG</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">TBD · Add booking</span>
+          <span class="meta-pill">~16h direct or connecting</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">Oct 10 (time zone +13h)</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-1" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- DAY 2: Oct 10 -->
+    <div class="day-header">
+      <div class="day-num">10</div>
+      <div class="day-info">
+        <div class="day-name">Saturday, October 10</div>
+        <div class="day-sub">Shanghai · Arrival day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Shanghai · 3 nights</div>
+            <div class="card-title">TBD — Shanghai Hotel</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in Oct 10</span>
+          <span class="meta-pill">Check-out Oct 12</span>
+          <span class="meta-pill">Add booking details</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Address</span>
+          <span class="ref-value">TBD — upload your booking</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-sha" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- DAY 3: Oct 11 -->
+    <div class="day-header">
+      <div class="day-num">11</div>
+      <div class="day-info">
+        <div class="day-name">Sunday, October 11</div>
+        <div class="day-sub">Shanghai · Explore</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Neighborhood · Bund + Old City</div>
+            <div class="card-title">The Bund + Yu Garden</div>
+          </div>
+          <div class="card-icon">🏯</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Morning walk</span>
+          <span class="meta-pill">Bund skyline · free</span>
+          <span class="meta-pill">Yu Garden entry ~¥40</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Tip</span>
+          <span class="ref-value">Bund is best at sunrise or after dark</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-bund" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Neighborhood · Arts</div>
+            <div class="card-title">French Concession</div>
+          </div>
+          <div class="card-icon">🎨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Afternoon</span>
+          <span class="meta-pill">Tianzifang alleys</span>
+          <span class="meta-pill">Xintiandi dining</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Tip</span>
+          <span class="ref-value">Add any restaurant/gallery bookings here</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-concession" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- DAY 4: Oct 12 -->
+    <div class="day-header">
+      <div class="day-num">12</div>
+      <div class="day-info">
+        <div class="day-name">Monday, October 12</div>
+        <div class="day-sub">Shanghai → Japan/Korea · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Leg 2</div>
+            <div class="card-title">Shanghai → Japan or Korea</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">TBD · Add booking</span>
+          <span class="meta-pill">PVG → TYO/ICN · ~2–3h</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Destination</span>
+          <span class="ref-value">Tokyo NRT/HND or Seoul ICN</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-2" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- COUNTRY: JAPAN OR KOREA -->
+    <div class="country-block">
+      <div class="country-label">
+        <div class="country-flag">🇯🇵🇰🇷</div>
+        <div class="country-name">Japan or South Korea</div>
+        <div class="country-line"></div>
+      </div>
+    </div>
+
+    <!-- DAY 4 cont / DAY 5-6: Oct 12-15 -->
+    <div class="day-header">
+      <div class="day-num">12–15</div>
+      <div class="day-info">
+        <div class="day-name">Mon – Thu, Oct 12–15</div>
+        <div class="day-sub">Japan/Korea · 3 nights</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Japan or Korea · 3 nights</div>
+            <div class="card-title">TBD — Add Hotel</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in Oct 12</span>
+          <span class="meta-pill">Check-out Oct 15</span>
+          <span class="meta-pill">Upload booking to fill in</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">City TBD</span>
+          <span class="ref-value">Tokyo · Osaka · Seoul · Busan</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-jpkr" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="alert-card" style="background:#fff7ed;border-color:#fed7aa;border-left:4px solid #ea580c;">
+        <div class="alert-icon">📍</div>
+        <div class="alert-text" style="color:#7c2d12;">
+          <strong>Decide:</strong> Japan or South Korea for Oct 12–15? Once confirmed, upload your bookings and this page will update automatically.
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTRY: VIETNAM -->
+    <div class="country-block">
+      <div class="country-label">
+        <div class="country-flag">🇻🇳</div>
+        <div class="country-name">Vietnam — Ho Chi Minh City</div>
+        <div class="country-line"></div>
+      </div>
+    </div>
+
+    <!-- DAY 7-11: Oct 15-19 -->
+    <div class="day-header">
+      <div class="day-num">15</div>
+      <div class="day-info">
+        <div class="day-name">Thursday, October 15</div>
+        <div class="day-sub">Japan/Korea → Ho Chi Minh · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Leg 3</div>
+            <div class="card-title">→ Ho Chi Minh SGN</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">TBD · Add booking</span>
+          <span class="meta-pill">TYO/ICN → SGN · ~5–6h</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">Tan Son Nhat International SGN</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-3" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Ho Chi Minh City · 4 nights</div>
+            <div class="card-title">TBD — Saigon Hotel</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in Oct 15</span>
+          <span class="meta-pill">Check-out Oct 19</span>
+          <span class="meta-pill">Upload booking to fill in</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">District</span>
+          <span class="ref-value">District 1 recommended (city center)</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-sgn" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <div class="day-header">
+      <div class="day-num">16</div>
+      <div class="day-info">
+        <div class="day-name">Friday, October 16</div>
+        <div class="day-sub">Ho Chi Minh City · Ben Thanh + Cu Chi</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Market · Morning</div>
+            <div class="card-title">Ben Thanh Market</div>
+          </div>
+          <div class="card-icon">🛒</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Early morning best</span>
+          <span class="meta-pill">Street food · local stalls</span>
+          <span class="meta-pill">Cash only · VND</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Tip</span>
+          <span class="ref-value">Arrive by 7am before tour buses hit</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-benthanh" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Day Trip · History</div>
+            <div class="card-title">Cu Chi Tunnels</div>
+          </div>
+          <div class="card-icon">🏕️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">~2h from HCMC</span>
+          <span class="meta-pill">Half or full day</span>
+          <span class="meta-pill">Book tour in advance</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Note</span>
+          <span class="ref-value">Add booking ref when booked</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-cuchi" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- COUNTRY: HONG KONG -->
+    <div class="country-block">
+      <div class="country-label">
+        <div class="country-flag">🇭🇰</div>
+        <div class="country-name">Hong Kong</div>
+        <div class="country-line"></div>
+      </div>
+    </div>
+
+    <!-- DAY 11-12: Oct 19-20 -->
+    <div class="day-header">
+      <div class="day-num">19</div>
+      <div class="day-info">
+        <div class="day-name">Sunday, October 19</div>
+        <div class="day-sub">Ho Chi Minh → Hong Kong · Travel day</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Leg 4</div>
+            <div class="card-title">SGN → Hong Kong HKG</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">TBD · Add booking</span>
+          <span class="meta-pill">SGN → HKG · ~2h 30m</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">Hong Kong International HKG</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-4" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card hotel">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Hotel · Hong Kong · 1 night</div>
+            <div class="card-title">TBD — HK Hotel</div>
+          </div>
+          <div class="card-icon">🏨</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Check-in Oct 19</span>
+          <span class="meta-pill">Check-out Oct 20</span>
+          <span class="meta-pill">Upload booking to fill in</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Area</span>
+          <span class="ref-value">Kowloon or Central recommended</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-hotel-hkg" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- DAY 12: Oct 20 -->
+    <div class="day-header">
+      <div class="day-num">20</div>
+      <div class="day-info">
+        <div class="day-name">Monday, October 20</div>
+        <div class="day-sub">Hong Kong · Fly home</div>
+      </div>
+    </div>
+    <div class="cards-in-day">
+      <div class="event-card activity">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Morning · Before flight</div>
+            <div class="card-title">Victoria Peak + Dim Sum</div>
+          </div>
+          <div class="card-icon">🌄</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">Morning</span>
+          <span class="meta-pill">Peak Tram from Central</span>
+          <span class="meta-pill">City + harbor views</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Tip</span>
+          <span class="ref-value">Tim Ho Wan for dim sum · book ahead</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-peak" placeholder="Add notes…"></textarea></div></div>
+      </div>
+      <div class="event-card flight">
+        <div class="card-top">
+          <div>
+            <div class="card-type">Flight · Return home</div>
+            <div class="card-title">Hong Kong HKG → JFK/EWR</div>
+          </div>
+          <div class="card-icon">✈️</div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill highlight">TBD · Add booking</span>
+          <span class="meta-pill">~16h direct or connecting</span>
+        </div>
+        <div class="card-ref">
+          <span class="ref-label">Arrives</span>
+          <span class="ref-value">New York · Oct 20 (cross dateline)</span>
+        </div>
+        <div class="card-expand-toggle" onclick="toggleExpand(this.parentElement)">▼</div>
+        <div class="card-notes"><div class="card-notes__inner"><div class="card-notes__label">Notes</div><textarea class="card-notes__input" data-key="note-flight-return" placeholder="Add notes…"></textarea></div></div>
+      </div>
+    </div>
+
+  </div><!-- /itinerary -->
+
+
+  <!-- ═══════════ PACKING TAB ═══════════ -->
+  <div class="tab-panel" id="tab-packing">
+    <div class="packing-section">
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Documents</div>
+        <div>
+          <div class="packing-item" data-key="pack-a1" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Passport (valid through 2028+)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a2" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">China visa (required for US citizens)</div>
+            <div class="packing-tag">Required</div>
+          </div>
+          <div class="packing-item" data-key="pack-a3" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Vietnam e-visa (apply online)</div>
+            <div class="packing-tag">Required</div>
+          </div>
+          <div class="packing-item" data-key="pack-a4" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">All booking confirmations (screenshot)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a5" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Travel insurance card / policy</div>
+          </div>
+          <div class="packing-item" data-key="pack-a6" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Credit card with no foreign fees</div>
+          </div>
+          <div class="packing-item" data-key="pack-a7" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Cash in USD (exchange at destination)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Tech & Connectivity</div>
+        <div>
+          <div class="packing-item" data-key="pack-a8" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">International SIM or eSIM (Asia)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a9" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">VPN app installed (required for China)</div>
+            <div class="packing-tag">China</div>
+          </div>
+          <div class="packing-item" data-key="pack-a10" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Universal adapter (Type A/C/G)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a11" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Portable charger / power bank</div>
+          </div>
+          <div class="packing-item" data-key="pack-a12" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Camera / extra memory cards</div>
+          </div>
+          <div class="packing-item" data-key="pack-a13" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Offline maps downloaded (Google/Maps.me)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Clothing · Fall Asia</div>
+        <div>
+          <div class="packing-item" data-key="pack-a14" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Light layers (Oct is warm but evenings cool)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a15" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Comfortable walking shoes</div>
+          </div>
+          <div class="packing-item" data-key="pack-a16" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Modest outfit (temple visits Japan/Korea)</div>
+            <div class="packing-tag">JP/KR</div>
+          </div>
+          <div class="packing-item" data-key="pack-a17" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Slip-on shoes (easy on/off for temples)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a18" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Light rain layer / packable jacket</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="packing-category">
+        <div class="packing-cat-title">Toiletries & Health</div>
+        <div>
+          <div class="packing-item" data-key="pack-a19" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Medications / prescriptions (2-week supply)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a20" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Stomach meds (pepto / imodium)</div>
+          </div>
+          <div class="packing-item" data-key="pack-a21" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Insect repellent (Vietnam)</div>
+            <div class="packing-tag">Vietnam</div>
+          </div>
+          <div class="packing-item" data-key="pack-a22" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">SPF 30+ sunscreen</div>
+          </div>
+          <div class="packing-item" data-key="pack-a23" onclick="togglePack(this)">
+            <div class="packing-check"></div>
+            <div class="packing-text">Hand sanitizer</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /packing -->
+
+
+  <!-- ═══════════ INFO TAB ═══════════ -->
+  <div class="tab-panel" id="tab-info">
+    <div class="info-section">
+
+      <div class="info-card">
+        <div class="info-card-title">✈️ Flights Overview</div>
+        <div class="info-row">
+          <span class="info-key">Outbound</span>
+          <span class="info-val">JFK → Shanghai PVG · Oct 9 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Leg 2</span>
+          <span class="info-val">Shanghai → Japan/Korea · Oct 12 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Leg 3</span>
+          <span class="info-val">Japan/Korea → Ho Chi Minh · Oct 15 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Leg 4</span>
+          <span class="info-val">Ho Chi Minh SGN → Hong Kong HKG · Oct 19 · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Return</span>
+          <span class="info-val">Hong Kong HKG → JFK/EWR · Oct 20 · TBD</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">🏨 Accommodation</div>
+        <div class="info-row">
+          <span class="info-key">Shanghai</span>
+          <span class="info-val">Oct 10–12 · 2 nights · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Japan/Korea</span>
+          <span class="info-val">Oct 12–15 · 3 nights · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Ho Chi Minh</span>
+          <span class="info-val">Oct 15–19 · 4 nights · TBD</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Hong Kong</span>
+          <span class="info-val">Oct 19–20 · 1 night · TBD</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">⚠️ Visa Requirements</div>
+        <div class="info-row">
+          <span class="info-key">China</span>
+          <span class="info-val" style="color:#E8291C;">Visa required · apply in advance</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Japan</span>
+          <span class="info-val">Visa-free for US citizens (90 days)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">South Korea</span>
+          <span class="info-val">Visa-free for US citizens (90 days)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Vietnam</span>
+          <span class="info-val" style="color:#E8291C;">E-visa required · apply online ~$25</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Hong Kong</span>
+          <span class="info-val">Visa-free for US citizens (90 days)</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">💰 Currency</div>
+        <div class="info-row">
+          <span class="info-key">China</span>
+          <span class="info-val">CNY / Yuan (¥) · WeChat Pay useful</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Japan</span>
+          <span class="info-val">JPY / Yen (¥) · cash-heavy culture</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">South Korea</span>
+          <span class="info-val">KRW / Won (₩) · cards widely accepted</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Vietnam</span>
+          <span class="info-val">VND / Dong (₫) · USD accepted widely</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Hong Kong</span>
+          <span class="info-val">HKD · Octopus card for transit</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">⚡ Still To Book</div>
+        <div class="info-row">
+          <span class="info-key">China visa</span>
+          <span class="info-val" style="color:#E8291C;">Apply ASAP — 4–6 week lead time</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Vietnam e-visa</span>
+          <span class="info-val" style="color:#B45309;">Apply online at evisa.xuatnhapcanh.gov.vn</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">All flights</span>
+          <span class="info-val" style="color:#E8291C;">No bookings added yet</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">All hotels</span>
+          <span class="info-val" style="color:#E8291C;">No bookings added yet</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Japan vs Korea</span>
+          <span class="info-val" style="color:#B45309;">Decide destination for Oct 12–15</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /info -->
+
+
+  <!-- ═══════════ EXPENSES TAB ═══════════ -->
+  <div class="tab-panel" id="tab-expenses">
+    <div class="info-section">
+
+      <!-- SUMMARY CARD -->
+      <div style="background: linear-gradient(135deg, #B91C0E 0%, #8B1208 100%); padding: 20px; margin-bottom: 12px; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(139,18,8,0.35);">
+        <div style="position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(0,0,0,0.18);"></div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #FFD6D1; margin-bottom: 4px; position: relative;">Total Trip Budget</div>
+        <div id="grand-total" style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 800; font-style: italic; color: #fff; line-height: 1; letter-spacing: -0.02em; position: relative;">$0</div>
+        <div style="font-size: 12px; color: #FFE3E0; margin-top: 6px; font-weight: 600; position: relative;">All confirmed bookings · USD</div>
+        <div style="display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.25); margin-top: 16px; padding-top: 14px; position: relative;">
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-flights" style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Flights</div>
+          </div>
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-stays" style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Stays</div>
+          </div>
+          <div style="flex:1; text-align:center; border-right: 1px solid rgba(255,255,255,0.2);">
+            <div id="stat-transport" style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Transport</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div id="stat-activities" style="font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color:#fff;">—</div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD6D1; margin-top: 3px;">Activities</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLIGHTS -->
+      <div class="info-card">
+        <div class="info-card-title">✈️ Flights</div>
+        <div class="expense-row">
+          <div class="expense-row__name">JFK → Shanghai PVG</div>
+          <div class="expense-row__meta">Oct 9 · Outbound</div>
+          <input class="expense-input" data-key="exp-a1" data-category="flights" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Shanghai → Japan/Korea</div>
+          <div class="expense-row__meta">Oct 12 · Leg 2</div>
+          <input class="expense-input" data-key="exp-a2" data-category="flights" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Japan/Korea → Ho Chi Minh SGN</div>
+          <div class="expense-row__meta">Oct 15 · Leg 3</div>
+          <input class="expense-input" data-key="exp-a3" data-category="flights" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Ho Chi Minh SGN → Hong Kong HKG</div>
+          <div class="expense-row__meta">Oct 19 · Leg 4</div>
+          <input class="expense-input" data-key="exp-a4" data-category="flights" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Hong Kong HKG → JFK/EWR</div>
+          <div class="expense-row__meta">Oct 20 · Return</div>
+          <input class="expense-input" data-key="exp-a5" data-category="flights" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-subtotal">
+          <span>Flights total</span>
+          <span id="total-flights">$0</span>
+        </div>
+      </div>
+
+      <!-- ACCOMMODATION -->
+      <div class="info-card">
+        <div class="info-card-title">🏨 Accommodation</div>
+        <div class="expense-row">
+          <div class="expense-row__name">Shanghai Hotel · 2 nights</div>
+          <div class="expense-row__meta">Oct 10–12</div>
+          <input class="expense-input" data-key="exp-a6" data-category="stays" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Japan/Korea Hotel · 3 nights</div>
+          <div class="expense-row__meta">Oct 12–15</div>
+          <input class="expense-input" data-key="exp-a7" data-category="stays" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Ho Chi Minh Hotel · 4 nights</div>
+          <div class="expense-row__meta">Oct 15–19</div>
+          <input class="expense-input" data-key="exp-a8" data-category="stays" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Hong Kong Hotel · 1 night</div>
+          <div class="expense-row__meta">Oct 19–20</div>
+          <input class="expense-input" data-key="exp-a9" data-category="stays" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-subtotal">
+          <span>Accommodation total</span>
+          <span id="total-stays">$0</span>
+        </div>
+      </div>
+
+      <!-- TRANSPORT -->
+      <div class="info-card">
+        <div class="info-card-title">🚇 Transport</div>
+        <div class="expense-row">
+          <div class="expense-row__name">PVG Airport → Shanghai hotel</div>
+          <div class="expense-row__meta">Maglev + metro or taxi</div>
+          <input class="expense-input" data-key="exp-a10" data-category="transport" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">In-city transit · all cities</div>
+          <div class="expense-row__meta">Metro, subway, Grab, taxis</div>
+          <input class="expense-input" data-key="exp-a11" data-category="transport" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Hong Kong Octopus card</div>
+          <div class="expense-row__meta">MTR transit card</div>
+          <input class="expense-input" data-key="exp-a12" data-category="transport" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-subtotal">
+          <span>Transport total</span>
+          <span id="total-transport">$0</span>
+        </div>
+      </div>
+
+      <!-- ACTIVITIES -->
+      <div class="info-card">
+        <div class="info-card-title">🎯 Activities</div>
+        <div class="expense-row">
+          <div class="expense-row__name">China visa fee</div>
+          <div class="expense-row__meta">US citizen · single entry</div>
+          <input class="expense-input" data-key="exp-a13" data-category="activities" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Vietnam e-visa fee</div>
+          <div class="expense-row__meta">Single entry · ~$25 USD</div>
+          <input class="expense-input" data-key="exp-a14" data-category="activities" type="number" value="25" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Cu Chi Tunnels tour</div>
+          <div class="expense-row__meta">Ho Chi Minh · half day</div>
+          <input class="expense-input" data-key="exp-a15" data-category="activities" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Activities · Japan/Korea</div>
+          <div class="expense-row__meta">Temples, tours, experiences</div>
+          <input class="expense-input" data-key="exp-a16" data-category="activities" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-row">
+          <div class="expense-row__name">Activities · other</div>
+          <div class="expense-row__meta">Yu Garden, Peak Tram, etc.</div>
+          <input class="expense-input" data-key="exp-a17" data-category="activities" type="number" placeholder="0.00" onchange="recalc()" oninput="recalc()">
+        </div>
+        <div class="expense-subtotal">
+          <span>Activities total</span>
+          <span id="total-activities">$0</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /expenses -->
+
+</div><!-- /content -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-item active" id="nav-itinerary" onclick="switchTab('itinerary')">
+    <div class="nav-icon">📅</div>
+    <div class="nav-label">Itinerary</div>
+  </div>
+  <div class="nav-item" id="nav-packing" onclick="switchTab('packing')">
+    <div class="nav-icon">🎒</div>
+    <div class="nav-label">Packing</div>
+  </div>
+  <div class="nav-item" id="nav-info" onclick="switchTab('info')">
+    <div class="nav-icon">📋</div>
+    <div class="nav-label">Info</div>
+  </div>
+  <div class="nav-item" id="nav-expenses" onclick="switchTab('expenses')">
+    <div class="nav-icon">💴</div>
+    <div class="nav-label">Expenses</div>
+  </div>
+</nav>
+
+<script>
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  const order = ['itinerary','packing','info','expenses'];
+  tabs[order.indexOf(name)]?.classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+}
+
+// Expandable notes
+function toggleExpand(card) {
+  card.classList.toggle('expanded');
+  if (card.classList.contains('expanded')) {
+    const ta = card.querySelector('.card-notes__input');
+    const key = ta?.dataset.key;
+    if (key) {
+      window.storage.get(key).then(r => { if (r?.value) ta.value = r.value; });
+    }
+  }
+}
+
+// Auto-save notes
+document.addEventListener('input', e => {
+  if (e.target.classList.contains('card-notes__input')) {
+    const key = e.target.dataset.key;
+    if (key) {
+      window.storage.set(key, e.target.value);
+      const ind = document.getElementById('save-indicator');
+      if (ind) { ind.classList.add('save-indicator--active'); setTimeout(() => ind.classList.remove('save-indicator--active'), 800); }
+    }
+  }
+});
+
+// Packing list
+function togglePack(item) {
+  item.classList.toggle('checked');
+  const check = item.querySelector('.packing-check');
+  if (item.classList.contains('checked')) check.textContent = '✓';
+  else check.textContent = '';
+  const key = item.dataset.key;
+  if (key) window.storage.set(key, item.classList.contains('checked') ? '1' : '');
+}
+
+// Load saved packing
+async function loadPacking() {
+  const items = document.querySelectorAll('.packing-item[data-key]');
+  for (const item of items) {
+    const r = await window.storage.get(item.dataset.key);
+    if (r?.value === '1') {
+      item.classList.add('checked');
+      item.querySelector('.packing-check').textContent = '✓';
+    }
+  }
+}
+
+// Expense calculator
+function recalc() {
+  const inputs = document.querySelectorAll('.expense-input');
+  let flights = 0, stays = 0, transport = 0, activities = 0;
+  inputs.forEach(inp => {
+    const val = parseFloat(inp.value) || 0;
+    const cat = inp.dataset.category;
+    if (cat === 'flights') flights += val;
+    else if (cat === 'stays') stays += val;
+    else if (cat === 'transport') transport += val;
+    else if (cat === 'activities') activities += val;
+    window.storage.set(inp.dataset.key, inp.value);
+  });
+  const total = flights + stays + transport + activities;
+  const fmt = n => n > 0 ? '$' + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '—';
+  document.getElementById('grand-total').textContent = total > 0 ? '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '$0';
+  document.getElementById('total-flights').textContent = fmt(flights);
+  document.getElementById('total-stays').textContent = fmt(stays);
+  document.getElementById('total-transport').textContent = fmt(transport);
+  document.getElementById('total-activities').textContent = fmt(activities);
+  document.getElementById('stat-flights').textContent = flights > 0 ? '$' + Math.round(flights) : '—';
+  document.getElementById('stat-stays').textContent = stays > 0 ? '$' + Math.round(stays) : '—';
+  document.getElementById('stat-transport').textContent = transport > 0 ? '$' + Math.round(transport) : '—';
+  document.getElementById('stat-activities').textContent = activities > 0 ? '$' + Math.round(activities) : '—';
+}
+
+// Load saved expenses
+async function loadExpenses() {
+  const inputs = document.querySelectorAll('.expense-input[data-key]');
+  for (const inp of inputs) {
+    const r = await window.storage.get(inp.dataset.key);
+    if (r?.value !== null && r?.value !== undefined && r?.value !== '') {
+      inp.value = r.value;
+    }
+  }
+  recalc();
+}
+
+// Countdown
+function updateCountdown() {
+  const dep = new Date('2026-10-09T00:00:00');
+  const now = new Date();
+  const diff = Math.ceil((dep - now) / 86400000);
+  const numEl = document.getElementById('countdown-num');
+  const lblEl = document.getElementById('countdown-label');
+  if (!numEl || !lblEl) return;
+  if (diff > 0) { numEl.textContent = diff; lblEl.textContent = 'days to go'; }
+  else if (diff === 0) { numEl.textContent = 'TODAY'; lblEl.textContent = 'Depart!'; }
+  else { numEl.textContent = Math.abs(diff); lblEl.textContent = 'days in'; }
+}
+
+// Init
+loadPacking();
+loadExpenses();
+updateCountdown();
+</script>
+
+</body>
+</html>
